@@ -6,7 +6,6 @@
 <title>Планшет НПУ</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-
   body {
     margin: 0;
     background: #0a142d;
@@ -18,7 +17,6 @@
     color: white;
     user-select: none;
   }
-
   .ipad {
     position: relative;
     width: 700px;
@@ -32,7 +30,6 @@
     padding: 35px 45px;
     overflow: hidden;
   }
-
   .camera {
     position: absolute;
     top: 10px;
@@ -44,10 +41,7 @@
     border-radius: 50%;
     box-shadow: inset 0 0 4px #222;
   }
-  .camera.active {
-    box-shadow: 0 0 8px #00aaff, inset 0 0 6px #00aaff;
-  }
-
+  .camera.active { box-shadow: 0 0 8px #00aaff, inset 0 0 6px #00aaff; }
   .ipad::after {
     content: "";
     position: absolute;
@@ -57,7 +51,6 @@
     mix-blend-mode: screen;
     pointer-events: none;
   }
-
   .ipad::before {
     content: "";
     position: absolute;
@@ -67,7 +60,6 @@
     box-shadow: inset 0 0 45px #001f4d, inset 0 0 20px #0047ff44;
     z-index: 1;
   }
-
   .screen {
     position: relative;
     z-index: 2;
@@ -86,7 +78,6 @@
     overflow: hidden;
     transition: opacity 0.8s ease;
   }
-
   .unlocked-bg {
     background: url('https://i.postimg.cc/Kck2F63J/image.jpg') center/cover no-repeat;
     filter: brightness(0.35) blur(2px);
@@ -96,7 +87,6 @@
     z-index: -1;
     border-radius: 28px;
   }
-
   .logo {
     width: 150px;
     height: 150px;
@@ -104,7 +94,6 @@
     background: url('https://i.postimg.cc/2575QP74/removebg-preview.png') no-repeat center/contain;
     filter: drop-shadow(0 0 8px #0077ffcc) drop-shadow(0 0 15px #0077ff88);
   }
-
   .main-title {
     font-size: 1.6rem;
     color: #b8d6ff;
@@ -112,7 +101,6 @@
     text-shadow: 0 0 12px #0040ffaa;
     font-weight: 700;
   }
-
   .navigation-label {
     font-size: 1.4rem;
     color: #7ab3ffcc;
@@ -120,7 +108,6 @@
     margin-bottom: 8px;
     font-weight: 700;
   }
-
   .unlock-btn {
     margin-top: 18px;
     background: linear-gradient(145deg, #0044aa, #002d70);
@@ -140,7 +127,6 @@
     box-shadow: 0 0 25px #0066ff, 0 7px 14px #0041a388;
     transform: translateY(-2px);
   }
-
   .lock-btn {
     position: absolute;
     top: 10px;
@@ -158,7 +144,6 @@
     cursor: pointer;
     z-index: 5;
   }
-
   .content-section {
     width: 100%;
     height: 100%;
@@ -170,26 +155,18 @@
     opacity: 0;
     transform: translateY(20px);
     animation: fadeIn 1s forwards;
-
-    /* Прокрутка */
     overflow-y: auto;
     padding-bottom: 20px;
     scrollbar-width: thin;
     scrollbar-color: #0077ff #001a3d;
   }
-  .content-section::-webkit-scrollbar {
-    width: 6px;
-  }
+  .content-section::-webkit-scrollbar { width: 6px; }
   .content-section::-webkit-scrollbar-thumb {
     background: #0077ff;
     border-radius: 4px;
   }
-  .content-section::-webkit-scrollbar-track {
-    background: #001a3d;
-  }
-
+  .content-section::-webkit-scrollbar-track { background: #001a3d; }
   @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
-
   .section-list {
     margin: 0 auto;
     padding: 0;
@@ -213,20 +190,13 @@
     color: #fff;
     transform: translateY(-3px);
   }
-
   iframe {
     width: 100%;
     height: 100%;
     border: none;
     border-radius: 28px;
   }
-
-  .pass-circles {
-    display: flex;
-    gap: 15px;
-    margin: 20px auto;
-    justify-content: center;
-  }
+  .pass-circles { display: flex; gap: 15px; margin: 20px auto; justify-content: center; }
   .circle {
     width: 18px;
     height: 18px;
@@ -235,7 +205,6 @@
     background: transparent;
   }
   .circle.filled { background: #00aaff; }
-
   .numpad {
     display: grid;
     grid-template-columns: repeat(3, 70px);
@@ -255,7 +224,6 @@
     transition: background 0.3s ease;
   }
   .numpad button:hover { background: #0055cc; }
-
   .back-btn {
     position: absolute;
     top: 10px;
@@ -312,6 +280,7 @@ function loadMenu() {
       <ul class="section-list">
         <li id="openOfficers">👮 Старший особовий склад</li>
         <li id="openPolice">👤 Працівник поліції</li>
+        <li id="openComplaint">⚠️ Скарга на громадянина України</li>
       </ul>
     </section>
   `;
@@ -320,6 +289,7 @@ function loadMenu() {
 
   document.getElementById('openOfficers').addEventListener('click', () => openIframe('https://more58-ai.github.io/Policek/officers/'));
   document.getElementById('openPolice').addEventListener('click', () => showPassScreen());
+  document.getElementById('openComplaint').addEventListener('click', () => openIframe('https://more58-ai.github.io/Policek/complaint.html'));
 }
 
 function showPassScreen() {
@@ -335,7 +305,6 @@ function showPassScreen() {
       </div>
     </section>
   `;
-
   const circles = screen.querySelectorAll('.circle');
   screen.querySelectorAll('.numpad button').forEach(btn=>{
     btn.addEventListener('click',()=>{
@@ -406,7 +375,6 @@ function openIframe(url) {
   screen.innerHTML = '';
   screen.appendChild(iframe);
   backBtn.style.display = 'flex';
-  setTimeout(() => iframe.classList.add('active'), 50);
 }
 
 backBtn.addEventListener('click', () => {
