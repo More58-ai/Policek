@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Подача скарг на громадян</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #0a1f3d;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      padding: 20px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    header img {
+      width: 200px;
+    }
+    h1 {
+      color: #ffd700;
+    }
+    form {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #112b50;
+      padding: 20px;
+      border-radius: 12px;
+      border: 2px solid #ffd700;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      color: #ffd700;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: none;
+      border-radius: 8px;
+      background-color: #0d2747;
+      color: #fff;
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px 20px;
+      background-color: #ffd700;
+      color: #0a1f3d;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #e6c200;
+    }
+
+    /* Кнопка мої скарги */
+    #viewComplaintsBtn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #ffd700;
+      color: #0a1f3d;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: bold;
+      z-index: 100;
+    }
+
+    /* Фон */
+    #overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 50;
+    }
+
+    /* Вікно */
+    #complaintsWindow {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #112b50;
+      padding: 20px;
+      border: 3px solid #ffd700;
+      border-radius: 12px;
+      width: 400px;
+      max-height: 80%;
+      overflow-y: auto;
+      text-align: left;
+      z-index: 101;
+    }
+    .complaint {
+      background: #0d2747;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    #closeComplaintsBtn {
+      display: block;
+      margin: 0 auto;
+      margin-top: 15px;
+      background-color: #ffd700;
+      color: #0a1f3d;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* Повідомлення після відправки */
+    #thankYouWindow {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #112b50;
+      padding: 20px;
+      border: 3px solid #ffd700;
+      border-radius: 12px;
+      width: 400px;
+      text-align: center;
+      z-index: 101;
+      color: #ffd700;
+    }
+    #closeThankYouBtn {
+      margin-top: 15px;
+      background-color: #ffd700;
+      color: #0a1f3d;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <button id="viewComplaintsBtn">Мої скарги</button>
+
+  <header>
+    <img src="https://i.postimg.cc/2575QP74/removebg-preview.png" alt="НПУ Лого">
+    <h1>Подача скарг на громадян</h1>
+  </header>
+
+  <form id="complaintForm">
+    <label>Ваше Ім’я та Прізвище:</label>
+    <input type="text" id="yourName" required>
+
+    <label>Ім’я та Прізвище громадянина, на якого скарга:</label>
+    <input type="text" id="citizenName" required>
+
+    <label>Опишіть ситуацію:</label>
+    <textarea id="details" rows="5" required></textarea>
+
+    <label>Докази (посилання на фото, наприклад postimages):</label>
+    <input type="text" id="evidence">
+
+    <button type="submit">Подати скаргу</button>
+  </form>
+
+  <!-- Фон -->
+  <div id="overlay"></div>
+
+  <!-- Вікно моїх скарг -->
+  <div id="complaintsWindow">
+    <h2>Мої скарги</h2>
+    <div id="complaintsList"></div>
+    <button id="closeComplaintsBtn">Закрити</button>
+  </div>
+
+  <!-- Повідомлення після відправки -->
+  <div id="thankYouWindow">
+    <p>Дякуємо за подану скаргу.</p>
+    <p>Перейдіть у розділ "Мої скарги", зробіть скріншот цієї скарги та відправте Генералу або Полковнику Рома Кабіна.</p>
+    <button id="closeThankYouBtn">Закрити</button>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('complaintForm');
+      const complaints = JSON.parse(localStorage.getItem('complaints') || '[]');
+
+      const overlay = document.getElementById('overlay');
+      const complaintsWindow = document.getElementById('complaintsWindow');
+      const complaintsList = document.getElementById('complaintsList');
+      const viewBtn = document.getElementById('viewComplaintsBtn');
+      const closeBtn = document.getElementById('closeComplaintsBtn');
+
+      const thankYouWindow = document.getElementById('thankYouWindow');
+      const closeThankYouBtn = document.getElementById('closeThankYouBtn');
+
+      function saveComplaints() {
+        localStorage.setItem('complaints', JSON.stringify(complaints));
+      }
+
+      function renderComplaints() {
+        complaintsList.innerHTML = '';
+        if (complaints.length === 0) {
+          complaintsList.innerHTML = '<p>Скарг поки що немає.</p>';
+          return;
+        }
+        complaints.forEach(c => {
+          const div = document.createElement('div');
+          div.className = 'complaint';
+          div.innerHTML = `
+            <p><strong>Відправник:</strong> ${c.yourName}</p>
+            <p><strong>На кого скарга:</strong> ${c.citizenName}</p>
+            <p><strong>Ситуація:</strong> ${c.details}</p>
+            <p><strong>Докази:</strong> ${c.evidence || '—'}</p>
+          `;
+          complaintsList.appendChild(div);
+        });
+      }
+
+      // Відправка скарги
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        const newComplaint = {
+          yourName: document.getElementById('yourName').value.trim(),
+          citizenName: document.getElementById('citizenName').value.trim(),
+          details: document.getElementById('details').value.trim(),
+          evidence: document.getElementById('evidence').value.trim()
+        };
+        complaints.push(newComplaint);
+        saveComplaints();
+        form.reset();
+
+        // Показуємо подяку
+        overlay.style.display = 'block';
+        thankYouWindow.style.display = 'block';
+      });
+
+      // Закрити подяку
+      closeThankYouBtn.addEventListener('click', () => {
+        thankYouWindow.style.display = 'none';
+        overlay.style.display = 'none';
+      });
+
+      // Відкрити "Мої скарги"
+      viewBtn.addEventListener('click', () => {
+        renderComplaints();
+        overlay.style.display = 'block';
+        complaintsWindow.style.display = 'block';
+      });
+
+      // Закрити "Мої скарги"
+      closeBtn.addEventListener('click', () => {
+        complaintsWindow.style.display = 'none';
+        overlay.style.display = 'none';
+      });
+    });
+  </script>
+</body>
+</html>
