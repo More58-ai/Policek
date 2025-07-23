@@ -12,6 +12,8 @@
       color: #ffffff;
       margin: 0;
       padding: 30px 15px;
+      position: relative;
+      overflow-x: hidden;
     }
 
     h1 {
@@ -38,11 +40,12 @@
     }
 
     .nav-board {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      display: flex;
+      justify-content: center;
       gap: 20px;
-      max-width: 1000px;
+      flex-wrap: wrap;
       margin: 40px auto;
+      max-width: 1000px;
     }
 
     .nav-card {
@@ -58,22 +61,43 @@
     }
 
     .nav-button {
-      width: 100%;
-      background-color: transparent;
+      width: 220px;
+      background: linear-gradient(135deg, #007bff, #00c6ff);
       border: none;
       color: #fff;
       font-weight: 700;
       font-size: 1.1rem;
-      padding: 25px 20px;
+      padding: 20px;
       cursor: pointer;
       font-family: 'Montserrat', sans-serif;
       text-align: center;
       border-radius: 14px;
-      transition: background-color 0.2s;
+      transition: background 0.3s, transform 0.2s;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
 
     .nav-button:hover {
-      background-color: rgba(255, 255, 255, 0.1);
+      background: linear-gradient(135deg, #00c6ff, #007bff);
+      transform: scale(1.05);
+    }
+
+    /* Ефект затемнення */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+      z-index: 999;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      pointer-events: auto;
     }
 
     .section {
@@ -118,20 +142,30 @@
       .section {
         padding: 20px;
       }
+
+      .nav-button {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
+
+  <div class="overlay" id="overlay"></div>
 
   <div class="logo-container">
     <img src="https://i.postimg.cc/8CWMpSjV/image.jpg" alt="Логотип НПУ">
   </div>
 
   <h1>НАЦІОНАЛЬНА ПОЛІЦІЯ УКРАЇНИ</h1>
-    <div class="nav-card">
-      <button class="nav-button" onclick="window.open('https://more58-ai.github.io/Policek/tablet.html', '_blank')">📋Планшет</button>
-    </div>
 
+  <div class="nav-board">
+    <div class="nav-card">
+      <button class="nav-button" onclick="openWithFade('https://more58-ai.github.io/Policek/tablet.html')">📋 Планшет</button>
+    </div>
+    <div class="nav-card">
+      <button class="nav-button" onclick="openWithFade('https://more58-ai.github.io/Policek/complaint.html')">📝 Подача скарги</button>
+    </div>
   </div>
 
   <div class="section">
@@ -170,5 +204,17 @@
     &copy; 2025 Національна поліція України. Всі права захищено.
   </footer>
 
+  <script>
+    function openWithFade(url) {
+      const overlay = document.getElementById('overlay');
+      overlay.classList.add('active');
+      setTimeout(() => {
+        window.open(url, '_blank');
+        overlay.classList.remove('active');
+      }, 500); // 0.5 секунди анімація
+    }
+  </script>
+
 </body>
 </html>
+
