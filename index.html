@@ -3,148 +3,122 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Національна поліція України</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+  <title>Старший особовий склад</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      scroll-behavior: smooth;
     }
 
     body {
       font-family: 'Montserrat', sans-serif;
-      background: linear-gradient(145deg, #d9e5f5, #f7f9fc);
-      color: #1a1a1a;
-      line-height: 1.6;
-    }
-
-    .logo-container {
+      background: linear-gradient(to bottom, #0057b7 0%, #ffd700 100%);
+      color: #000;
+      padding: 30px 15px;
       text-align: center;
-      margin-top: 60px;
-      margin-bottom: 10px;
     }
 
-    .logo-container img {
-      width: 180px;
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      width: 160px;
       height: auto;
       border-radius: 50%;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-      margin-bottom: -30px;
       background: white;
-      padding: 10px;
+      padding: 12px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+      margin-bottom: 20px;
     }
 
-    .title {
-      text-align: center;
-      font-size: 32px;
-      font-weight: 800;
-      color: #002e5b;
-      margin-top: 50px;
+    h1 {
+      font-size: 34px;
+      color: #ffd700;
+      margin-bottom: 40px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    }
+
+    .officer-card {
+      background: #ffffffcc;
+      border: 2px solid #0057b7;
+      border-radius: 16px;
+      padding: 30px 20px;
       margin-bottom: 30px;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      transition: transform 0.3s;
     }
 
-    .card {
-      background: white;
-      max-width: 1000px;
-      margin: 20px auto;
-      padding: 40px 30px;
-      border-radius: 20px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    .officer-card:hover {
+      transform: translateY(-4px);
     }
 
-    .card h2 {
-      color: #003366;
-      font-size: 24px;
-      margin-bottom: 15px;
-      border-bottom: 2px solid #007bff;
-      display: inline-block;
-      padding-bottom: 5px;
+    .officer-rank {
+      font-size: 20px;
+      color: #0057b7;
+      font-weight: 700;
+      margin-bottom: 6px;
     }
 
-    .card p, .card ul {
-      font-size: 16px;
-      color: #333;
+    .officer-name {
+      font-size: 18px;
+      font-weight: 600;
+      color: #222;
+      margin-bottom: 20px;
     }
 
-    .card ul {
-      padding-left: 20px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 30px 10px;
-      font-size: 14px;
-      color: #666;
+    .badge {
+      width: 140px;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+      border: 2px solid #ffd700;
     }
 
     @media (max-width: 600px) {
-      .title {
-        font-size: 24px;
-        margin-top: 40px;
+      .logo {
+        width: 120px;
       }
-
-      .card {
-        padding: 25px 20px;
-        border-radius: 12px;
+      h1 {
+        font-size: 26px;
+      }
+      .officer-card {
+        padding: 20px 15px;
       }
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <!-- Логотип -->
+    <img class="logo" src="https://i.postimg.cc/8CWMpSjV/image.jpg" alt="Логотип НПУ">
 
-  <div class="logo-container">
-    <img src="https://i.postimg.cc/8CWMpSjV/image.jpg" alt="Логотип НПУ без фону">
+    <!-- Заголовок -->
+    <h1>Старший Особовий Склад</h1>
+
+    <!-- Генерал -->
+    <div class="officer-card">
+      <div class="officer-rank">Генерал</div>
+      <div class="officer-name">Іван Чувак</div>
+      <img class="badge" src="https://i.postimg.cc/8ckXFVXj/image.jpg" alt="Погони генерала">
+    </div>
+
+    <!-- Полковник Бульба -->
+    <div class="officer-card">
+      <div class="officer-rank">Полковник</div>
+      <div class="officer-name">Костік Бульба</div>
+      <img class="badge" src="https://i.postimg.cc/Vv3txqtm/image.jpg" alt="Погони полковника">
+    </div>
+
+    <!-- Полковник Мішин -->
+    <div class="officer-card">
+      <div class="officer-rank">Полковник</div>
+      <div class="officer-name">Артем Мішин</div>
+      <img class="badge" src="https://i.postimg.cc/Vv3txqtm/image.jpg" alt="Погони полковника">
+    </div>
   </div>
-
-  <div class="title">НАЦІОНАЛЬНА ПОЛІЦІЯ УКРАЇНИ</div>
-
-  <div class="card">
-    <h2>Про НПУ</h2>
-    <p>Національна поліція України — центральний орган виконавчої влади, що забезпечує охорону прав і свобод громадян, протидіє злочинності та підтримує громадський порядок на території України.</p>
-  </div>
-
-  <div class="card">
-    <h2>Основні завдання</h2>
-    <ul>
-      <li>Охорона прав і свобод людини</li>
-      <li>Боротьба зі злочинністю</li>
-      <li>Підтримання громадського порядку</li>
-      <li>Забезпечення безпеки дорожнього руху</li>
-      <li>Охорона об’єктів критичної інфраструктури</li>
-    </ul>
-  </div>
-
-  <div class="card">
-    <h2>Структура</h2>
-    <p>До складу НПУ входять такі підрозділи: кримінальна поліція, патрульна поліція, кіберполіція, підрозділ КОРД, поліція охорони, слідчі органи та інші служби.</p>
-  </div>
-
-  <div class="card">
-    <h2>Напрями роботи</h2>
-    <ul>
-      <li>Кримінальні розслідування</li>
-      <li>Кібербезпека</li>
-      <li>Безпека дорожнього руху</li>
-      <li>Протидія наркозлочинності</li>
-      <li>Попередження домашнього насильства</li>
-    </ul>
-  </div>
-
-  <div class="card">
-    <h2>Контакти</h2>
-    <p>
-      ✉ Email: info@police.gov.ua<br>
-      ☎ Телефон: +38 (044) 254-74-00<br>
-      📍 Адреса: вул. Академіка Богомольця, 10, Київ, Україна
-    </p>
-  </div>
-
-  <footer>
-    &copy; 2025 Національна поліція України. Всі права захищено.
-  </footer>
-
 </body>
 </html>
