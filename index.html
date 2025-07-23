@@ -2,146 +2,183 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Національна поліція України</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      scroll-behavior: smooth;
-    }
-
     body {
       font-family: 'Montserrat', sans-serif;
-      background: linear-gradient(145deg, #d9e5f5, #f7f9fc);
-      color: #1a1a1a;
-      line-height: 1.6;
-    }
-
-    nav {
-      background-color: #002e5b;
-      padding: 12px 25px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-    }
-
-    nav a {
+      background: linear-gradient(to bottom, #0057b7, #ffd700);
       color: #ffffff;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 16px;
-      margin: 0 15px;
-      padding: 8px 16px;
-      border-radius: 6px;
-      transition: background 0.3s;
+      margin: 0;
+      padding: 30px 15px;
     }
 
-    nav a:hover {
-      background-color: #004080;
+    h1 {
+      text-align: center;
+      color: #fff;
+      font-size: 2.6rem;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 3px #000;
     }
 
     .logo-container {
       text-align: center;
-      margin-top: 40px;
+      margin-top: 30px;
       margin-bottom: 10px;
     }
 
     .logo-container img {
-      width: 180px;
+      width: 160px;
       height: auto;
       border-radius: 50%;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-      margin-bottom: -30px;
       background: white;
       padding: 10px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
     }
 
-    .title {
-      text-align: center;
-      font-size: 32px;
-      font-weight: 800;
-      color: #002e5b;
-      margin-top: 50px;
-      margin-bottom: 30px;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
-
-    .card {
-      background: white;
+    .nav-board {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
       max-width: 1000px;
-      margin: 20px auto;
-      padding: 40px 30px;
-      border-radius: 20px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      margin: 40px auto;
     }
 
-    .card h2 {
-      color: #003366;
+    .nav-card {
+      background-color: #ffffff22;
+      border-radius: 14px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.25);
+      transition: transform 0.2s, box-shadow 0.3s;
+    }
+
+    .nav-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+    }
+
+    .nav-button {
+      width: 100%;
+      background-color: transparent;
+      border: none;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 25px 20px;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      text-align: center;
+      border-radius: 14px;
+      transition: background-color 0.2s;
+    }
+
+    .nav-button:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .section {
+      max-width: 1000px;
+      margin: 30px auto;
+      background: #ffffffdd;
+      color: #000;
+      border-radius: 16px;
+      padding: 30px 25px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+
+    .section h2 {
       font-size: 24px;
-      margin-bottom: 15px;
-      border-bottom: 2px solid #007bff;
+      color: #003366;
+      border-bottom: 2px solid #0057b7;
       display: inline-block;
+      margin-bottom: 15px;
       padding-bottom: 5px;
     }
 
-    .card p, .card ul {
+    .section p, .section ul {
       font-size: 16px;
-      color: #333;
     }
 
-    .card ul {
+    .section ul {
       padding-left: 20px;
     }
 
     footer {
       text-align: center;
-      padding: 30px 10px;
+      margin-top: 50px;
       font-size: 14px;
-      color: #666;
+      color: #ffffffaa;
     }
 
     @media (max-width: 600px) {
-      nav {
-        flex-direction: column;
+      h1 {
+        font-size: 2rem;
       }
 
-      nav a {
-        margin: 8px 0;
-      }
-
-      .title {
-        font-size: 24px;
-        margin-top: 40px;
-      }
-
-      .card {
-        padding: 25px 20px;
-        border-radius: 12px;
+      .section {
+        padding: 20px;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Навігація -->
-  <nav>
-    <a href="#top">Головна</a>
-    <a href="https://more58-ai.github.io/Policek/officers/">Старший особовий склад</a>
-  </nav>
-
-  <!-- Логотип -->
-  <div class="logo-container" id="top">
-    <img src="https://i.postimg.cc/8CWMpSjV/image.jpg" alt="Логотип НПУ без фону">
+  <div class="logo-container">
+    <img src="https://i.postimg.cc/8CWMpSjV/image.jpg" alt="Логотип НПУ">
   </div>
 
-  <!-- Заголовок -->
-  <div class="title">НАЦІОНАЛЬНА ПОЛІЦІЯ УКРАЇНИ</div>
+  <h1>НАЦІОНАЛЬНА ПОЛІЦІЯ УКРАЇНИ</h1>
 
-  <!-- Контент -->
-  <div class="card">
+  <div class="nav-board">
+    <div class="nav-card">
+      <button class="nav-button" onclick="window.location.href='index.html'">🏠 Головна</button>
+    </div>
+    <div class="nav-card">
+      <button class="nav-button" onclick="window.open('https://more58-ai.github.io/Policek/officers/', '_blank')">🎖 Старший особовий склад</button>
+    </div>
+    <div class="nav-card">
+      <button class="nav-button" onclick="alert('Сторінка в розробці')">🛡️ Патрульна служба</button>
+    </div>
+    <div class="nav-card">
+      <button class="nav-button" onclick="alert('Сторінка в розробці')">🕵️ Кримінальна поліція</button>
+    </div>
+  </div>
+
+  <div class="section">
     <h2>Про НПУ</h2>
-    <p>Національна поліція України — центральний орган виконавчої влади, що забезпечує охорону прав і свобод громадян, протидіє злочинності та підтримує громадський порядок на тер
+    <p>Національна поліція України — центральний орган виконавчої влади, що забезпечує охорону прав і свобод громадян, протидіє злочинності та підтримує громадський порядок на території України.</p>
+  </div>
+
+  <div class="section">
+    <h2>Основні завдання</h2>
+    <ul>
+      <li>Охорона прав і свобод людини</li>
+      <li>Боротьба зі злочинністю</li>
+      <li>Підтримання громадського порядку</li>
+      <li>Забезпечення безпеки дорожнього руху</li>
+      <li>Охорона об’єктів критичної інфраструктури</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Структура</h2>
+    <p>До складу НПУ входять: кримінальна поліція, патрульна поліція, кіберполіція, КОРД, поліція охорони, слідчі органи та інші підрозділи.</p>
+  </div>
+
+  <div class="section">
+    <h2>Напрями роботи</h2>
+    <ul>
+      <li>Кримінальні розслідування</li>
+      <li>Кібербезпека</li>
+      <li>Безпека дорожнього руху</li>
+      <li>Протидія наркозлочинності</li>
+      <li>Попередження домашнього насильства</li>
+    </ul>
+  </div>
+
+  <footer>
+    &copy; 2025 Національна поліція України. Всі права захищено.
+  </footer>
+
+</body>
+</html>
