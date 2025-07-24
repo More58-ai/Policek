@@ -275,6 +275,7 @@ function loadMenu() {
         <li id="openOfficers">👮 Старший особовий склад</li>
         <li id="openPolice">👤 Працівник поліції</li>
         <li id="openComplaint">⚠️ Скарга на громадянина України</li>
+        <li id="openComplaint">⚠️ Підрозділи</li>
       </ul>
     </section>
   `;
@@ -284,6 +285,7 @@ function loadMenu() {
   document.getElementById('openOfficers').addEventListener('click', () => openIframe('https://more58-ai.github.io/Policek/officers/'));
   document.getElementById('openPolice').addEventListener('click', () => showPassScreen());
   document.getElementById('openComplaint').addEventListener('click', () => openIframe('https://more58-ai.github.io/Policek/complaint.html'));
+   document.getElementById('openPidrozdil').addEventListener('click', () => openIframe('https://more58-ai.github.io/Policek/pidrozdil.html'));
 }
 
 function showPassScreen() {
