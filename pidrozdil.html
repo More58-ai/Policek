@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Підрозділи НПУ</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom, #0057b7, #ffd700);
+      color: #fff;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px;
+      background: rgba(0,0,0,0.7);
+      border-bottom: 4px solid red;
+    }
+
+    header img {
+      max-height: 120px;
+      display: block;
+      margin: 0 auto;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-top: 10px;
+      color: #ffd700;
+      text-shadow: 2px 2px 5px black;
+    }
+
+    .intro {
+      text-align: center;
+      padding: 30px 15px;
+      background: rgba(0,0,0,0.5);
+      font-size: 1.4rem;
+      line-height: 1.6;
+    }
+
+    .units {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      padding: 40px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .unit-card {
+      background: #fff;
+      color: #000;
+      border-radius: 20px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+      overflow: hidden;
+      transition: transform 0.4s, box-shadow 0.4s;
+      border: 3px solid #0057b7;
+      position: relative;
+    }
+
+    .unit-card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 12px 25px rgba(255,0,0,0.5);
+    }
+
+    .unit-card img {
+      width: 100%;
+      max-height: 180px;
+      object-fit: contain;
+      background: #f0f0f0;
+      padding: 10px;
+    }
+
+    .unit-card h2 {
+      text-align: center;
+      margin: 0;
+      padding: 15px;
+      font-size: 1.8rem;
+      background: #0057b7;
+      color: #ffd700;
+      text-shadow: 1px 1px 2px black;
+    }
+
+    .unit-card p {
+      padding: 20px;
+      font-size: 1.1rem;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    footer {
+      background: #000;
+      color: #fff;
+      text-align: center;
+      padding: 15px;
+      font-size: 0.9rem;
+      border-top: 3px solid red;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="https://i.postimg.cc/MKSQrjGb/removebg-preview.png" alt="Лого НПУ">
+    <h1>Підрозділи Національної поліції України</h1>
+  </header>
+
+  <div class="intro">
+    Вітаємо! Тут ви знайдете інформацію про ключові підрозділи 
+    <b style="color:red;">НПУ</b>, які захищають спокій, безпеку 
+    та законність на території України.
+  </div>
+
+  <div class="units">
+    <div class="unit-card">
+      <img src="https://i.postimg.cc/WpnNTDn7/removebg-preview.png" alt="КОРД">
+      <h2>КОРД</h2>
+      <p><b>Корпус оперативно-раптової дії</b> — елітний спецпідрозділ для боротьби 
+         з організованою злочинністю, терористами та проведення складних спецоперацій.</p>
+    </div>
+
+    <div class="unit-card">
+      <img src="https://i.postimg.cc/MTww8xf4/removebg-preview.png" alt="НА">
+      <h2>НА</h2>
+      <p><b>Навчальна Академія</b> — заклад підготовки та перепідготовки правоохоронців, 
+         що формує нове покоління професійної поліції.</p>
+    </div>
+
+    <div class="unit-card">
+      <img src="https://i.postimg.cc/DfgXHw49/removebg-preview.png" alt="ПП">
+      <h2>Патрульна поліція (ПП)</h2>
+      <p><b>Патрульна поліція</b> — основна служба, яка підтримує громадський порядок, 
+         забезпечує безпеку дорожнього руху та оперативне реагування на виклики.</p>
+    </div>
+
+    <div class="unit-card">
+      <img src="https://i.postimg.cc/DfJzdfdQ/removebg-preview.png" alt="МотоБат">
+      <h2>МотоБат</h2>
+      <p><b>Мотоциклетний батальйон</b> — швидкісний та мобільний підрозділ, 
+         що виконує супровід колон та миттєве реагування на надзвичайні ситуації.</p>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 Національна поліція України. Всі права захищено.
+  </footer>
+</body>
+</html>
