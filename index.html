@@ -15,8 +15,6 @@
       line-height: 1.6;
       position: relative;
     }
-
-    /* Фон з проблисками */
     body::before {
       content: "";
       position: fixed;
@@ -33,7 +31,6 @@
       from { background-position: 0 0, 150px 150px; }
       to { background-position: 50px 50px, 200px 100px; }
     }
-
     h1 {
       text-align: center;
       font-size: 3rem;
@@ -46,11 +43,7 @@
       from { text-shadow: 0 0 20px #2563eb, 0 0 40px #1e40af; }
       to { text-shadow: 0 0 40px #38bdf8, 0 0 70px #facc15; }
     }
-
-    .logo-container {
-      text-align: center;
-      margin-top: 25px;
-    }
+    .logo-container { text-align: center; margin-top: 25px; }
     .logo-container img {
       width: 170px;
       border-radius: 50%;
@@ -59,11 +52,7 @@
       box-shadow: 0 0 40px rgba(250,204,21,0.4), 0 0 25px rgba(38,198,218,0.3);
       animation: float 4s ease-in-out infinite;
     }
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-12px); }
-    }
-
+    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
     .nav-board {
       display: flex;
       justify-content: center;
@@ -80,135 +69,81 @@
       box-shadow: 0 0 25px rgba(0,0,0,0.4);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    .nav-card:hover {
-      transform: translateY(-6px) scale(1.05);
-      box-shadow: 0 0 45px rgba(38,198,218,0.5);
-    }
+    .nav-card:hover { transform: translateY(-6px) scale(1.05); box-shadow: 0 0 45px rgba(38,198,218,0.5); }
     .nav-button {
       width: 250px;
       background: linear-gradient(135deg, #2563eb, #facc15, #38bdf8);
       background-size: 400% 400%;
       animation: pulse 8s ease infinite;
-      border: none;
-      color: #fff;
-      font-weight: 700;
-      font-size: 1.2rem;
-      padding: 18px;
-      cursor: pointer;
+      border: none; color: #fff;
+      font-weight: 700; font-size: 1.2rem;
+      padding: 18px; cursor: pointer;
       border-radius: 12px;
       box-shadow: 0 0 20px rgba(250,204,21,0.3);
       transition: transform 0.25s;
     }
-    @keyframes pulse {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    .nav-button:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 40px rgba(38,198,218,0.6);
-    }
-
+    @keyframes pulse { 0% {background-position:0% 50%;} 50% {background-position:100% 50%;} 100% {background-position:0% 50%;} }
+    .nav-button:hover { transform: scale(1.1); box-shadow: 0 0 40px rgba(38,198,218,0.6); }
     .section {
-      max-width: 900px;
-      margin: 30px auto;
-      padding: 30px;
+      max-width: 900px; margin: 30px auto; padding: 30px;
       border-radius: 18px;
       background: rgba(255,255,255,0.05);
       backdrop-filter: blur(12px);
       box-shadow: 0 0 30px rgba(0,0,0,0.3);
-      opacity: 0;
-      transform: scale(0.9) translateY(40px);
+      opacity: 0; transform: scale(0.9) translateY(40px);
       transition: opacity 1s ease, transform 1s ease;
     }
-    .section.visible {
-      opacity: 1;
-      transform: scale(1) translateY(0);
-    }
-    .section h2 {
-      color: #facc15;
-      text-shadow: 0 0 10px #38bdf8;
-      font-size: 1.8rem;
-      margin-bottom: 12px;
-    }
-
-    .tasks {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 40px;
-      gap: 40px;
-    }
+    .section.visible { opacity:1; transform: scale(1) translateY(0); }
+    .section h2 { color: #facc15; text-shadow: 0 0 10px #38bdf8; font-size:1.8rem; margin-bottom:12px; }
+    .tasks { display:flex; flex-direction:column; align-items:center; margin-top:40px; gap:40px; }
     .task-block {
-      width: 60%;
-      padding: 25px;
-      border-radius: 16px;
+      width:60%; padding:25px; border-radius:16px;
       box-shadow: 0 0 20px rgba(38,198,218,0.4);
-      border: 2px solid transparent;
+      border:2px solid transparent;
       background: linear-gradient(145deg, rgba(38,198,218,0.08), rgba(250,204,21,0.08));
       background-clip: padding-box;
       transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
-    .task-block:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 35px rgba(250,204,21,0.6);
-      border-color: #38bdf8;
-    }
-    .task-block.right {
-      align-self: flex-end;
-    }
-    .task-block.left {
-      align-self: flex-start;
-    }
+    .task-block:hover { transform: scale(1.05); box-shadow:0 0 35px rgba(250,204,21,0.6); border-color:#38bdf8; }
+    .task-block.right { align-self:flex-end; }
+    .task-block.left { align-self:flex-start; }
+    .arrow { font-size:3rem; color:#38bdf8; animation:moveDiag 2s infinite; }
+    @keyframes moveDiag {0%{transform:translate(0,0) rotate(45deg);opacity:.5;}50%{transform:translate(20px,20px) rotate(45deg);opacity:1;}100%{transform:translate(0,0) rotate(45deg);opacity:.5;} }
+    footer { text-align:center; margin:50px 0 20px; font-size:14px; color:#94a3b8; }
 
-    /* Стрілка з рухом */
-    .arrow {
-      font-size: 3rem;
-      color: #38bdf8;
-      animation: moveDiag 2s infinite;
+    /* Модальне вікно */
+    .modal-overlay {
+      position: fixed; top:0; left:0; width:100%; height:100%;
+      background: rgba(15,23,42,0.8); backdrop-filter: blur(6px);
+      display: none; align-items: center; justify-content: center; z-index:1000;
     }
-    @keyframes moveDiag {
-      0% { transform: translate(0,0) rotate(45deg); opacity: 0.5; }
-      50% { transform: translate(20px,20px) rotate(45deg); opacity: 1; }
-      100% { transform: translate(0,0) rotate(45deg); opacity: 0.5; }
+    .modal-content {
+      position:absolute; width:50%; height:70%; min-width:400px; min-height:300px;
+      background: rgba(30,41,59,0.95); color:#f1f5f9; border-radius:12px;
+      box-shadow:0 0 40px rgba(56,189,248,0.6);
+      top:50%; left:50%; transform:translate(-50%,-50%);
+      display:flex; flex-direction:column;
     }
-
-    footer {
-      text-align: center;
-      margin: 50px 0 20px;
-      font-size: 14px;
-      color: #94a3b8;
+    .modal-header {
+      display:flex; justify-content:space-between; align-items:center;
+      padding:10px 20px; background:rgba(38,198,218,0.2);
+      border-top-left-radius:12px; border-top-right-radius:12px;
+      cursor:grab; font-weight:bold;
     }
-
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.7);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.5s ease;
-      z-index: 999;
+    .modal-body {
+      flex:1; overflow-y:auto; padding:20px;
     }
-    .overlay.active { opacity: 1; pointer-events: auto; }
-
-    @media (max-width: 600px) {
-      h1 { font-size: 2rem; }
-      .nav-button { width: 100%; }
-      .task-block { width: 90%; }
-    }
+    .modal-body img { max-width:100%; border-radius:8px; margin:15px 0; box-shadow:0 0 20px rgba(38,198,218,0.4); }
+    .modal-btn { background:none; border:none; color:#f1f5f9; font-size:1.5rem; cursor:pointer; margin-left:10px; }
+    .modal-btn:hover { color:#38bdf8; }
+    @media (max-width:700px) { .modal-content { width:90%; height:70%; } }
   </style>
 </head>
 <body>
 
-  <div class="overlay" id="overlay"></div>
-
   <div class="logo-container">
     <img src="https://i.postimg.cc/8CWMpSjV/image.jpg" alt="Логотип НПУ Києва">
   </div>
-
   <h1>НАЦІОНАЛЬНА ПОЛІЦІЯ УКРАЇНИ м. КИЄВА</h1>
 
   <div class="nav-board">
@@ -218,7 +153,7 @@
       </button>
     </div>
     <div class="nav-card">
-      <button class="nav-button">
+      <button class="nav-button" onclick="openNews()">
         📰 Новини та Оголошення
       </button>
     </div>
@@ -228,10 +163,9 @@
     <h2>Про наш підрозділ</h2>
     <p>Національна поліція України м. Києва працює цілодобово, щоб гарантувати правопорядок і безпеку в столиці. Ми патрулюємо вулиці, розслідуємо злочини та захищаємо громадян.</p>
   </div>
-
   <div class="section">
     <h2>Нова технологія: планшет НПУ</h2>
-    <p>У 2025 році ми впровадили <b>планшет НПУ</b> — інноваційний пристрій для патрульних, що дозволяє миттєво отримувати дані, фіксувати правопорушення та координувати роботу підрозділів.</p>
+    <p>У 2025 році ми впровадили <b>планшет НПУ</b> — інноваційний пристрій для патрульних і громадян. Він дозволяє швидко отримувати дані, фіксувати правопорушення та координувати роботу підрозділів у режимі реального часу.</p>
   </div>
 
   <div class="tasks">
@@ -239,37 +173,80 @@
       <h2>Патрулювання вулиць</h2>
       <p>Щоденна присутність патрулів на вулицях Києва гарантує безпеку жителів. Використання GPS і сучасних технологій дозволяє швидко реагувати на виклики.</p>
     </div>
-
     <div class="arrow">➔</div>
-
     <div class="task-block right">
       <h2>Захист громадян</h2>
-      <p>Забезпечення правопорядку, запобігання злочинам і оперативна допомога кожному, хто потребує захисту — наш пріоритет.</p>
+      <p>Запобігання злочинам і оперативна допомога кожному, хто потребує захисту, — наш пріоритет.</p>
     </div>
-
     <div class="arrow">➔</div>
-
     <div class="task-block left">
       <h2>Робота з громадою</h2>
-      <p>Ми взаємодіємо з населенням, проводимо профілактичні заходи та ініціативи для безпечного життя в Києві.</p>
+      <p>Ми проводимо профілактичні заходи та взаємодіємо з населенням для безпечного життя в Києві.</p>
     </div>
   </div>
 
-  <footer>
-    &copy; 2025 Національна Поліція України м. Києва. Всі права захищено.
-  </footer>
+  <footer>&copy; 2025 Національна Поліція України м. Києва. Всі права захищено.</footer>
+
+  <!-- Модальне вікно -->
+  <div class="modal-overlay" id="newsModal">
+    <div class="modal-content" id="modalBox">
+      <div class="modal-header" id="modalHeader">
+        <span>Новини та Оголошення</span>
+        <div>
+          <button class="modal-btn" onclick="closeNews()">⟲ Назад</button>
+          <button class="modal-btn" onclick="closeNews()">✖</button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <h2>Офіційний планшет ГУНПУ м. Києва</h2>
+        <p>У 2025 році з'явився <b>офіційний планшет</b> для громадян та працівників поліції.  
+           Пристрій дає змогу подати заяви, отримати консультацію та перевірити інформацію онлайн.</p>
+        <img src="https://i.postimg.cc/SxV59ww7/Screenshot-2025-07-25-221314.png" alt="Планшет 1">
+        <p>Цей планшет також полегшує роботу патрульних, дозволяючи оперативно координуватися з колегами та отримувати актуальні дані.</p>
+        <img src="https://i.postimg.cc/QdLNPWtn/Screenshot-2025-07-25-221327.png" alt="Планшет 2">
+        <p>У найближчий час на пристрої з'являться нові сервіси для громадян: запис на прийом, подача скарг і відстеження статусу звернень.</p>
+      </div>
+    </div>
+  </div>
 
   <script>
     function openWithFade(url) {
-      const overlay = document.getElementById('overlay');
-      overlay.classList.add('active');
-      setTimeout(() => {
-        window.open(url, '_blank');
-        overlay.classList.remove('active');
-      }, 500);
+      const overlay = document.createElement('div');
+      overlay.style.position = 'fixed';
+      overlay.style.top = '0'; overlay.style.left = '0';
+      overlay.style.width = '100%'; overlay.style.height = '100%';
+      overlay.style.background = 'rgba(0,0,0,0.7)';
+      overlay.style.zIndex = '9999';
+      overlay.style.opacity = '0';
+      overlay.style.transition = 'opacity 0.5s';
+      document.body.appendChild(overlay);
+      setTimeout(() => overlay.style.opacity = '1', 10);
+      setTimeout(() => { window.open(url, '_blank'); document.body.removeChild(overlay); }, 600);
     }
+    function openNews() { document.getElementById('newsModal').style.display = 'flex'; }
+    function closeNews() { document.getElementById('newsModal').style.display = 'none'; }
 
-    // Плавна поява при скролі
+    const modalBox = document.getElementById('modalBox');
+    const modalHeader = document.getElementById('modalHeader');
+    let isDragging = false, offsetX, offsetY;
+    modalHeader.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      offsetX = e.clientX - modalBox.offsetLeft;
+      offsetY = e.clientY - modalBox.offsetTop;
+      modalHeader.style.cursor = 'grabbing';
+    });
+    document.addEventListener('mousemove', (e) => {
+      if (isDragging) {
+        modalBox.style.left = e.clientX - offsetX + 'px';
+        modalBox.style.top = e.clientY - offsetY + 'px';
+        modalBox.style.transform = 'translate(0,0)';
+      }
+    });
+    document.addEventListener('mouseup', () => {
+      isDragging = false;
+      modalHeader.style.cursor = 'grab';
+    });
+
     const sections = document.querySelectorAll('.section, .task-block');
     window.addEventListener('scroll', () => {
       const trigger = window.innerHeight * 0.8;
