@@ -1,611 +1,308 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Планшет НПУ</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-  body {
-    margin: 0;
-    background: #0a142d;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    font-family: 'Montserrat', sans-serif;
-    color: white;
-    user-select: none;
-  }
-  .ipad {
-    position: relative;
-    width: 700px;
-    height: 440px;
-    border-radius: 55px;
-    background: linear-gradient(145deg, #e3e7ef, #b1b8c9);
-    box-shadow: 6px 6px 22px #6e7588, -6px -6px 22px #ffffff, inset 0 0 30px rgba(255,255,255,0.3);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 35px 45px;
-    overflow: hidden;
-  }
-  .camera {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 14px;
-    height: 14px;
-    background: #000;
-    border-radius: 50%;
-    box-shadow: inset 0 0 4px #222;
-    transition: box-shadow 0.3s ease;
-  }
-  .camera.active { box-shadow: 0 0 8px #00aaff, inset 0 0 6px #00aaff; }
-  .ipad::after {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    border-radius: 55px;
-    background: linear-gradient(145deg, rgba(255,255,255,0.25), rgba(255,255,255,0.05));
-    mix-blend-mode: screen;
-    pointer-events: none;
-  }
-  .ipad::before {
-    content: "";
-    position: absolute;
-    top: 16px; left: 16px; right: 16px; bottom: 16px;
-    border-radius: 38px;
-    background: #121d40;
-    box-shadow: inset 0 0 45px #001f4d, inset 0 0 20px #0047ff44;
-    z-index: 1;
-  }
-  .screen {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    height: 100%;
-    border-radius: 28px;
-    background: linear-gradient(135deg, #001f3f 0%, #003366 50%, #001a3d 100%);
-    box-shadow: inset 0 0 60px #002266, 0 0 15px #0044aa99;
-    padding: 25px 20px 40px 20px;
-    color: #accaffdd;
-    text-align: center;
-    font-weight: 600;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow: hidden;
-    transition: opacity 0.8s ease;
-  }
-  .screen.shake {
-    animation: shake 0.4s ease;
-  }
-  @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-8px); }
-    50% { transform: translateX(8px); }
-    75% { transform: translateX(-4px); }
-  }
-  .unlocked-bg {
-    background: url('https://i.postimg.cc/Bb3BtcGz/image.jpg') center/cover no-repeat;
-    filter: brightness(0.35) blur(2px);
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    z-index: -1;
-    border-radius: 28px;
-  }
-  .logo {
-    width: 150px;
-    height: 150px;
-    margin-bottom: 10px;
-    background: url('https://i.postimg.cc/2575QP74/removebg-preview.png') no-repeat center/contain;
-    filter: drop-shadow(0 0 8px #0077ffcc) drop-shadow(0 0 15px #0077ff88);
-  }
-  .main-title {
-    font-size: 1.6rem;
-    color: #b8d6ff;
-    margin-bottom: 6px;
-    text-shadow: 0 0 12px #0040ffaa;
-    font-weight: 700;
-  }
-  .navigation-label {
-    font-size: 1.4rem;
-    color: #7ab3ffcc;
-    text-shadow: 0 0 8px #0066ccaa, 0 0 16px #0055ccaa;
-    margin-bottom: 8px;
-    font-weight: 700;
-  }
-  .unlock-btn {
-    margin-top: 18px;
-    background: linear-gradient(145deg, #0044aa, #002d70);
-    border: none;
-    border-radius: 28px;
-    padding: 16px 48px;
-    color: #a0c8ff;
-    font-size: 1.2rem;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0 0 15px #0044aa88, 0 4px 8px #002d7088;
-    transition: all 0.35s ease;
-    z-index: 3;
-  }
-  .unlock-btn:hover {
-    background: linear-gradient(145deg, #0066ff, #0041a3);
-    box-shadow: 0 0 25px #0066ff, 0 7px 14px #0041a388;
-    transform: translateY(-2px);
-  }
-  .lock-btn, .back-btn {
-    position: absolute;
-    top: 10px;
-    width: 50px;
-    height: 50px;
-    background: radial-gradient(circle, #0044ff, #001144);
-    border-radius: 50%;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-size: 24px;
-    box-shadow: 0 0 12px #0077ff, inset 0 0 8px #0055ff;
-    cursor: pointer;
-    z-index: 5;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  .lock-btn:hover, .back-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 25px #00aaff, inset 0 0 12px #0077ff;
-  }
-  .lock-btn { right: 10px; font-size: 20px; }
-  .back-btn { left: 10px; font-size: 26px; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Національна Поліція України м. Києва</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: radial-gradient(circle at top, #0f172a 0%, #1e293b 100%);
+      color: #f1f5f9;
+      overflow-x: hidden;
+      line-height: 1.6;
+      position: relative;
+      transition: background 0.5s, color 0.5s;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(circle, rgba(0,123,255,0.15) 10%, transparent 40%),
+                  radial-gradient(circle, rgba(255,0,0,0.12) 10%, transparent 50%);
+      background-size: 300px 300px;
+      background-position: 0 0, 150px 150px;
+      animation: lights 8s infinite alternate;
+      z-index: -1;
+    }
+    @keyframes lights {
+      from { background-position: 0 0, 150px 150px; }
+      to { background-position: 50px 50px, 200px 100px; }
+    }
+    h1 {
+      text-align: center;
+      font-size: 3rem;
+      margin: 40px auto 10px;
+      color: #facc15;
+      text-shadow: 0 0 20px #2563eb, 0 0 40px #1e40af;
+      animation: glow 4s ease-in-out infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 20px #2563eb, 0 0 40px #1e40af; }
+      to { text-shadow: 0 0 40px #38bdf8, 0 0 70px #facc15; }
+    }
+    .logo-container { text-align: center; margin-top: 25px; }
+    .logo-container img {
+      width: 170px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      padding: 15px;
+      box-shadow: 0 0 40px rgba(250,204,21,0.4), 0 0 25px rgba(38,198,218,0.3);
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+    .nav-board {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      flex-wrap: wrap;
+      margin: 40px auto;
+      max-width: 1000px;
+    }
+    .nav-card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 18px;
+      padding: 10px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 25px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .nav-card:hover { transform: translateY(-6px) scale(1.05); box-shadow: 0 0 45px rgba(38,198,218,0.5); }
+    .nav-button {
+      width: 250px;
+      background: linear-gradient(135deg, #2563eb, #facc15, #38bdf8);
+      background-size: 400% 400%;
+      animation: pulse 8s ease infinite;
+      border: none; color: #fff;
+      font-weight: 700; font-size: 1.2rem;
+      padding: 18px; cursor: pointer;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(250,204,21,0.3);
+      transition: transform 0.25s;
+    }
+    @keyframes pulse { 0% {background-position:0% 50%;} 50% {background-position:100% 50%;} 100% {background-position:0% 50%;} }
+    .nav-button:hover { transform: scale(1.1); box-shadow: 0 0 40px rgba(38,198,218,0.6); }
+    .section {
+      max-width: 900px; margin: 30px auto; padding: 30px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 30px rgba(0,0,0,0.3);
+      opacity: 0; transform: scale(0.9) translateY(40px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+    .section.visible { opacity:1; transform: scale(1) translateY(0); }
+    .section h2 { color: #facc15; text-shadow: 0 0 10px #38bdf8; font-size:1.8rem; margin-bottom:12px; }
+    .tasks { display:flex; flex-direction:column; align-items:center; margin-top:40px; gap:40px; }
+    .task-block {
+      width:60%; padding:25px; border-radius:16px;
+      box-shadow: 0 0 20px rgba(38,198,218,0.4);
+      border:2px solid transparent;
+      background: linear-gradient(145deg, rgba(38,198,218,0.08), rgba(250,204,21,0.08));
+      background-clip: padding-box;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .task-block:hover { transform: scale(1.05); box-shadow:0 0 35px rgba(250,204,21,0.6); border-color:#38bdf8; }
+    .task-block.right { align-self:flex-end; }
+    .task-block.left { align-self:flex-start; }
+    .arrow { font-size:3rem; color:#38bdf8; animation:moveDiag 2s infinite; }
+    @keyframes moveDiag {0%{transform:translate(0,0) rotate(45deg);opacity:.5;}50%{transform:translate(20px,20px) rotate(45deg);opacity:1;}100%{transform:translate(0,0) rotate(45deg);opacity:.5;} }
+    footer { text-align:center; margin:50px 0 20px; font-size:14px; color:#94a3b8; position:relative; }
 
-  .content-section {
-    width: 100%;
-    height: 100%;
-    color: #e6f0ff;
-    font-size: 1.3rem;
-    text-align: center;
-    font-weight: 600;
-    position: relative;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeIn 1s forwards;
-    overflow-y: auto;
-    padding-bottom: 20px;
-    scrollbar-width: thin;
-    scrollbar-color: #0077ff #001a3d;
-  }
-  .content-section::-webkit-scrollbar { width: 6px; }
-  .content-section::-webkit-scrollbar-thumb {
-    background: #0077ff;
-    border-radius: 4px;
-  }
-  .content-section::-webkit-scrollbar-track { background: #001a3d; }
-  @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
-  .section-list {
-    margin: 0 auto;
-    padding: 0;
-    list-style: none;
-    max-width: 400px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-  .section-list li {
-    padding: 14px 20px;
-    border-radius: 18px;
-    background: rgba(0, 70, 160, 0.3);
-    cursor: pointer;
-    box-shadow: 0 0 12px rgba(0, 120, 255, 0.4);
-    transition: all 0.3s ease;
-  }
-  .section-list li:hover {
-    background: rgba(0, 120, 255, 0.5);
-    box-shadow: 0 0 20px rgba(0, 160, 255, 0.9);
-    color: #fff;
-    transform: translateY(-3px);
-  }
-  iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    border-radius: 28px;
-  }
-  .pass-circles { display: flex; gap: 15px; margin: 20px auto; justify-content: center; }
-  .circle {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    border: 2px solid #00aaff;
-    background: transparent;
-  }
-  .circle.filled { background: #00aaff; }
-  .numpad {
-    display: grid;
-    grid-template-columns: repeat(3, 70px);
-    gap: 10px;
-    justify-content: center;
-    margin-top: 15px;
-  }
-  .numpad button {
-    background: #002d70;
-    color: #a0c8ff;
-    border: none;
-    font-size: 1.4rem;
-    padding: 14px;
-    border-radius: 14px;
-    box-shadow: 0 0 10px #0044aa;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  .numpad button:hover { background: #0055cc; }
-</style>
+    /* Неонова лінія внизу */
+    footer::after {
+      content: "";
+      position: absolute;
+      bottom: -5px; left: 0;
+      width: 100%; height: 2px;
+      background: linear-gradient(90deg, transparent, #38bdf8, #facc15, transparent);
+      animation: scanline 3s linear infinite;
+    }
+    @keyframes scanline { 0% {transform: translateX(-100%);} 100% {transform: translateX(100%);} }
+
+    /* Модальне вікно (на весь екран) */
+    .modal-overlay {
+      position: fixed; top:0; left:0; width:100%; height:100%;
+      background: rgba(15,23,42,0.8); backdrop-filter: blur(6px);
+      display: flex; align-items: center; justify-content: center;
+      z-index:1000; opacity:0; pointer-events:none;
+      transition: opacity 0.5s ease;
+    }
+    .modal-overlay.active { opacity:1; pointer-events:auto; }
+    .modal-content {
+      width: 90%; height: 90%;
+      background: rgba(30,41,59,0.95); color:#f1f5f9;
+      border-radius:12px; box-shadow:0 0 40px rgba(56,189,248,0.6);
+      transform: scale(0.7); opacity:0;
+      transition: transform 0.5s ease, opacity 0.5s ease;
+      display:flex; flex-direction:column; overflow:hidden;
+    }
+    .modal-overlay.active .modal-content { transform: scale(1); opacity:1; }
+    .modal-header {
+      display:flex; justify-content:space-between; align-items:center;
+      padding:10px 20px; background:rgba(38,198,218,0.2);
+      border-top-left-radius:12px; border-top-right-radius:12px;
+      font-weight:bold;
+    }
+    .modal-body { flex:1; overflow-y:auto; padding:20px; }
+    .modal-body img { max-width:100%; border-radius:8px; margin:15px 0; box-shadow:0 0 20px rgba(38,198,218,0.4); }
+    .modal-btn { background:none; border:none; color:#f1f5f9; font-size:1.5rem; cursor:pointer; margin-left:10px; }
+    .modal-btn:hover { color:#38bdf8; }
+
+    /* Темна/світла тема */
+    .light-theme {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+    .light-theme h1 { color: #1e40af; text-shadow: none; }
+    .light-theme .section { background: rgba(0,0,0,0.05); }
+    .light-theme .nav-button { background: linear-gradient(135deg, #1e40af, #f59e0b, #0ea5e9); }
+    .light-theme footer { color: #475569; }
+    @media (max-width:700px) { .modal-content { width:95%; height:90%; } }
+  </style>
 </head>
 <body>
-  <div class="ipad">
-    <div class="camera" id="camera"></div>
-    <div class="lock-btn" id="lockBtn">🔒</div>
-    <div class="back-btn" id="backBtn">←</div>
-    <div class="screen" id="screen">
-      <div class="logo"></div>
-      <div class="main-title">Національна поліція України м. Київ</div>
-      <div class="navigation-label">Навігаційний планшет</div>
+
+  <div class="logo-container">
+    <img src="https://i.postimg.cc/PxNj31gc/removebg-preview.png" alt="Логотип НПУ Києва">
+  </div>
+  <h1>НАЦІОНАЛЬНА ПОЛІЦІЯ УКРАЇНИ м. КИЄВА</h1>
+
+  <div class="nav-board">
+    <div class="nav-card">
+      <button class="nav-button" onclick="openTablet('https://more58-ai.github.io/Policek/tablet.html')">
+        📋 Планшет НПУ Києва
+      </button>
     </div>
-    <button class="unlock-btn" id="unlockBtn">Розблокувати</button>
+    <div class="nav-card">
+      <button class="nav-button" onclick="openNews()">
+        📰 Новини та Оголошення
+      </button>
+    </div>
   </div>
 
-<script>
-const unlockBtn = document.getElementById('unlockBtn');
-const lockBtn = document.getElementById('lockBtn');
-const screen = document.getElementById('screen');
-const backBtn = document.getElementById('backBtn');
-const camera = document.getElementById('camera');
-let iframe;
-let inPoliceMenu = false;
-const PASSWORD = "0210";
+  <div class="section">
+    <h2>Про наш підрозділ</h2>
+    <p>Національна поліція України м. Києва працює цілодобово, щоб гарантувати правопорядок і безпеку в столиці. Ми патрулюємо вулиці, розслідуємо злочини та захищаємо громадян.</p>
+  </div>
+  <div class="section">
+    <h2>Нова технологія: планшет НПУ</h2>
+    <p>У 2025 році ми впровадили <b>планшет НПУ</b> — інноваційний пристрій для патрульних і громадян. Він дозволяє швидко отримувати дані, фіксувати правопорушення та координувати роботу підрозділів у режимі реального часу.</p>
+  </div>
 
-function loadMenu() {
-  screen.innerHTML = `
-    <div class="unlocked-bg"></div>
-    <section class="content-section">
-      <h2>Розділи</h2>
-     <ul class="section-list">
-  <li id="openOfficers">👮 Старший особовий склад</li>
-  <li id="openPolice">👤 Працівник поліції</li>
-  <li id="openComplaint">⚠️ Скарга на громадянина України</li>
-  <li id="openPidrozdil">⚠️ Підрозділи</li>
-</ul>
-    </section>
-  `;
-  screen.style.opacity = "1";
-  lockBtn.style.display = "flex";
+  <div class="tasks">
+    <div class="task-block left">
+      <h2>Патрулювання вулиць</h2>
+      <p>Щоденна присутність патрулів на вулицях Києва гарантує безпеку жителів. Використання GPS і сучасних технологій дозволяє швидко реагувати на виклики.</p>
+    </div>
+    <div class="arrow">➔</div>
+    <div class="task-block right">
+      <h2>Захист громадян</h2>
+      <p>Запобігання злочинам і оперативна допомога кожному, хто потребує захисту, — наш пріоритет.</p>
+    </div>
+    <div class="arrow">➔</div>
+    <div class="task-block left">
+      <h2>Робота з громадою</h2>
+      <p>Ми проводимо профілактичні заходи та взаємодіємо з населенням для безпечного життя в Києві.</p>
+    </div>
+  </div>
 
-  document.getElementById('openOfficers').addEventListener('click', () => openIframe('https://more58-ai.github.io/Policek/officers/'));
-  document.getElementById('openPolice').addEventListener('click', () => showPassScreen());
-  document.getElementById('openComplaint').addEventListener('click', () => openIframe('https://more58-ai.github.io/Policek/complaint.html'));
-   document.getElementById('openPidrozdil').addEventListener('click', () => openIframe('https://more58-ai.github.io/Policek/pidrozdil.html'));
-}
+  <footer>&copy; 2025 Національна Поліція України м. Києва. Всі права захищено.</footer>
 
-function showPassScreen() {
-  camera.classList.add('active');
-  let entered = "";
-  screen.innerHTML = `
-    <div class="unlocked-bg"></div>
-    <section class="content-section">
-      <h2>Введіть пароль</h2>
-      <div class="pass-circles">${'<div class="circle"></div>'.repeat(4)}</div>
-      <div class="numpad">
-        ${[1,2,3,4,5,6,7,8,9,"←",0,"OK"].map(n=>`<button>${n}</button>`).join('')}
+  <!-- Модальне вікно -->
+  <div class="modal-overlay" id="newsModal">
+    <div class="modal-content" id="modalBox">
+      <div class="modal-header" id="modalHeader">
+        <span>Новини та Оголошення</span>
+        <div>
+          <button class="modal-btn" onclick="closeNews()">⟲ Назад</button>
+          <button class="modal-btn" onclick="closeNews()">✖</button>
+        </div>
       </div>
-    </section>
-  `;
-  const circles = screen.querySelectorAll('.circle');
-  screen.querySelectorAll('.numpad button').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      if(btn.textContent === "←") {
-        entered = entered.slice(0,-1);
-      } else if(btn.textContent === "OK") {
-        if(entered === PASSWORD) {
-          camera.classList.remove('active');
-          loadPoliceMenu();
-        } else {
-          entered = "";
-          screen.classList.add('shake');
-          setTimeout(()=>screen.classList.remove('shake'),500);
-          circles.forEach(c=>c.classList.remove('filled'));
-        }
-      } else if(entered.length < 4) {
-        entered += btn.textContent;
-      }
-      circles.forEach((c,i)=>c.classList.toggle('filled',i<entered.length));
+      <div class="modal-body">
+        <h2>Офіційний планшет ГУНПУ м. Києва</h2>
+        <p>У 2025 році з'явився <b>офіційний планшет</b> для громадян та працівників поліції.  
+           Пристрій дає змогу подати заяви, отримати консультацію та перевірити інформацію онлайн.</p>
+        <img src="https://i.postimg.cc/SxV59ww7/Screenshot-2025-07-25-221314.png" alt="Планшет 1">
+        <p>Цей планшет також полегшує роботу патрульних, дозволяючи оперативно координуватися з колегами та отримувати актуальні дані.</p>
+        <img src="https://i.postimg.cc/QdLNPWtn/Screenshot-2025-07-25-221327.png" alt="Планшет 2">
+        <p>У найближчий час на пристрої з'являться нові сервіси для громадян: запис на прийом, подача скарг і відстеження статусу звернень.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Кнопка наверх -->
+  <button id="toTop" style="
+    position:fixed; bottom:30px; right:30px;
+    background:#38bdf8; border:none; color:#fff;
+    padding:10px 15px; border-radius:50%; cursor:pointer;
+    font-size:20px; display:none; box-shadow:0 0 15px rgba(56,189,248,0.6);
+  ">↑</button>
+
+  <!-- Перемикач теми -->
+  <button id="themeToggle" style="
+    position:fixed; top:20px; right:20px;
+    background:#2563eb; color:#fff; border:none;
+    padding:8px 14px; border-radius:8px; cursor:pointer;
+    box-shadow:0 0 10px rgba(37,99,235,0.5);
+  ">Змінити тему</button>
+
+  <script>
+    // Плавне відкриття планшета
+    function openTablet(url) {
+      const overlay = document.createElement('div');
+      overlay.style.position = 'fixed';
+      overlay.style.top = '0'; overlay.style.left = '0';
+      overlay.style.width = '100%'; overlay.style.height = '100%';
+      overlay.style.background = 'rgba(0,0,0,0.8)';
+      overlay.style.zIndex = '9999';
+      overlay.style.display = 'flex';
+      overlay.style.alignItems = 'center';
+      overlay.style.justifyContent = 'center';
+      const tablet = document.createElement('div');
+      tablet.style.width = '200px'; tablet.style.height = '120px';
+      tablet.style.border = '3px solid #38bdf8';
+      tablet.style.borderRadius = '12px';
+      tablet.style.boxShadow = '0 0 40px #38bdf8, 0 0 80px #facc15';
+      tablet.style.transition = 'all 0.6s ease';
+      overlay.appendChild(tablet);
+      document.body.appendChild(overlay);
+      setTimeout(() => {
+        tablet.style.width = '90%';
+        tablet.style.height = '90%';
+        tablet.style.opacity = '0';
+      }, 50);
+      setTimeout(() => {
+        document.body.removeChild(overlay);
+        window.open(url, '_blank');
+      }, 700);
+    }
+
+    // Модальне вікно
+    function openNews() { document.getElementById('newsModal').classList.add('active'); }
+    function closeNews() { document.getElementById('newsModal').classList.remove('active'); }
+
+    // Анімації при скролі
+    const sections = document.querySelectorAll('.section, .task-block');
+    window.addEventListener('scroll', () => {
+      const trigger = window.innerHeight * 0.8;
+      sections.forEach(sec => {
+        const top = sec.getBoundingClientRect().top;
+        if (top < trigger) sec.classList.add('visible');
+      });
+
+      // Показ кнопки "Наверх"
+      document.getElementById('toTop').style.display = window.scrollY > 300 ? 'block' : 'none';
     });
-  });
-}
 
-function loadPoliceMenu() {
-  inPoliceMenu = true;
-  screen.innerHTML = `
-    <div class="unlocked-bg"></div>
-    <section class="content-section">
-      <h2>Меню Працівника</h2>
-      <ul class="section-list">
-        <li id="promotionSystem">📈 Система Підвищення</li>
-        <li id="promotionReport">📝 Рапорт на підвищення</li>
-        <li id="terminology">📚 Термінологія</li>
-        <li id="subordination">📜 Субординація</li>
-        <li id="statute">📖 Статут</li>
-        <li id="schedule">🕒 Графік Роботи</li>
-        <li id="codes">🔢 Коди та 10-коди</li>
-        <li id="miranda">⚖️ Міранда</li>
-      </ul>
-    </section>
-  `;
-  backBtn.style.display = 'flex';
+    // Кнопка "Наверх"
+    document.getElementById('toTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-  document.getElementById('promotionSystem').addEventListener('click',()=>openSubSection("Система Підвищення"));
-  document.getElementById('promotionReport').addEventListener('click',()=>openIframe('https://docs.google.com/forms/d/e/1FAIpQLSf9j2aQsxvatdzPLIwXN-kWNJhnxyUqXq2WmaeuHxQ8sTaaJg/viewform?usp=dialog'));
-  document.getElementById('terminology').addEventListener('click',()=>openSubSection("Термінологія"));
-  document.getElementById('subordination').addEventListener('click',()=>openSubSection("Субординація"));
-  document.getElementById('statute').addEventListener('click',()=>openSubSection("Статут"));
-  document.getElementById('schedule').addEventListener('click',()=>openSubSection("Графік Роботи"));
-  document.getElementById('codes').addEventListener('click',()=>openSubSection("Коди та 10-коди"));
-  document.getElementById('miranda').addEventListener('click',()=>openSubSection("Міранда"));
-}
-
-function openIframe(url) {
-  iframe = document.createElement('iframe');
-  iframe.src = url;
-  screen.innerHTML = '';
-  screen.appendChild(iframe);
-  backBtn.style.display = 'flex';
-}
-
-backBtn.addEventListener('click', () => {
-  if(iframe) { 
-    iframe.remove(); 
-    iframe = null; 
-    if(inPoliceMenu) loadPoliceMenu(); 
-    else loadMenu(); 
-    return; 
-  }
-  if(inPoliceMenu) { loadPoliceMenu(); } 
-  else { loadMenu(); backBtn.style.display='none'; }
-});
-
-unlockBtn.addEventListener('click', () => {
-  screen.style.opacity = "0";
-  setTimeout(() => { loadMenu(); }, 600);
-  unlockBtn.style.display = 'none';
-});
-
-lockBtn.addEventListener('click', () => {
-  screen.innerHTML = `
-    <div class="logo"></div>
-    <div class="main-title">Національна поліція України</div>
-    <div class="navigation-label">Навігація</div>
-  `;
-  unlockBtn.style.display = 'block';
-  lockBtn.style.display = 'none';
-  backBtn.style.display = 'none';
-  inPoliceMenu = false;
-  iframe?.remove();
-});
-const sectionTexts = {
-  "Система Підвищення": `
-    <p>Рядовий поліції[1]- Капрал поліції[2]
-    Отримати роль в DISCORD
-Здати присягу</p>
-
-<p>Капрал поліції [2]-Сержант поліції[3]
-Здати іспит на тему субординація, графік роботи
-Побувати на одній лекції</p>
-
-<p>Сержант поліції[3]- Старший сержант поліції [4]
-Здати іспит на тему правила патрулювання, правила міранди
-Побувати на 2 лекціях та на 2 тренуваннях
-Патрулювання 10 хв</p>
-
-<p>Старший сержант поліції[4]- Молодший лейтенант поліції[5]
-Патрулювання 15 хв
-Затримати одного злочинця
-Виписати 1 штраф
-Побувати на 2 лекціях</p>
-
-<p>Молодший лейтенант поліції [5] - Лейтенант поліції [6]:
-Патрулювання 20 хв
-Побувати на 3 лекціях
-Побувати на 2 тренуваннях
-Побувати на одному рп/бп
-Затримати 1 злочинця</p>
-
-<p>Лейтенант поліції [6] - Старший лейтенант поліції [7]:
-Патрулювання 20 хв
-Побути на 2 лекціях
-Чергування ІТТ 10 хв</p>
-
-<p>Старший лейтенант поліції [7] - Капітан поліції [8]
-Патруль 30 хв
-Бути присутнім на 2 лекціях
-Чергування холу 10 хв
-Чергування ІТТ 10 хв.</p>
-  `,
-  "Термінологія": `
-    <p>Національна Поліція України
-Термінологія законодавства
-
-<h3><p>Нормативно-правовий акт (НПА)</H3> -
-правило поведінки, офіційний письмовий документ, ухвалений уповноваженим на це органом державної влади. Нормативно-правовий акт є широким поняттям. Нормативно-правовим актом вважається документ, ухвалений у визначеному порядку компетентним органом публічної влади, у якому містяться норми права, окрім іншого, Конституція та закони України.</p>
-
-<h3><p>Конституція України</h3> - нормативно-правовий акт вищої юридичної сили. Закон зі спеціальним статусом, який визначає правові основи функціонування Української Держави.
-Закон - нормативно-правовий акт, встановлений законодавчим органом (ВРУ). Закон являється загальнообов’язковим правилом поведінки.</p>
-
-<h3><p>ККУ</h3> - кримінальний кодекс України має своїм завданням правове забезпечення охорони прав і свобод людини і громадянина, власності, громадського порядку та громадської безпеки, довкілля, конституційного устрою України від кримінально-протиправних посягань, забезпечення миру і безпеки людства, а також запобігання кримінальним правопорушенням.</p>
-
-<h3><p>КУпАП</h3> - Кодекс України про адміністративні правопорушення</p>
-
-<h3><p>Арешт</h3> - кримінальне покарання, що полягає в триманні засудженого в умовах ізоляції.</p>
-
-<h3><p>КПКУ</h3> - Кримінально-процесуальний кодекс України.
-Закон, що визначає порядок кримінального провадження на території України.</p>
-
-<h3><p>ЄРДР</h3> - Єдиний реєстр досудових розслідувань. Автоматизована база даних, куди вносяться кримінальні провадження.</p>
-
-<h3><p>Вина</h3> — психічне ставлення особи до своїх протиправних дій або до бездіяльності</p>
-
-<h3><p>В чому різниця між арештом та затриманням?</h3> Затримання зазвичай це тимчасове утримання особи з метою наприклад перевірки наявності вчиненого правопорушення , а Арешт це в нас позбавлення волі особи яке відбулось на підставі судового рішення.</p>
-
-<h3><p>Презумпція невинуватості</h3> - Кожен кого обвинуваченно у вчиненні кримінального правопорушення вважається невинним доки його вину не визнає суд</p>
-
-<h3><p>Злочин</h3> - злочином є суспільно небезпечне діяння за яке передбачуване кримінальну відповідальність згідно Кримінального Кодексу України.</p>
-
-<h3><p>ІТТ - Ізолятор Тимчасового Тримання</h3>
-Кримінальне провадження - процес, спрямований на забезпечення повного та неупередженого розслідування злочину, встановлення всіх обставин з тим, щоб кожний, хто вчинив кримінальне правопорушення був притнутий до відповідальності, що складається з досудового розслідування та судового розгляду</p>
-
-<h3><p>Свідок</h3> - це особа, яка була очевидцем події злочину або якій можуть бути відомі обставини, що мають значення у кримінальному провадженні</p>
-
-<h3><p>Вирок суду</h3> - судове рішення в кримінальному провадженні. Може бути обвинувальним (особу визнають винуватою у учиненні злочину) чи виправдувальним (особу визнають невинною в учиненні злочину).</p>
-
-<h3><p>Докази</h3> - це фактичні дані, отримані у визначеному законом порядку, на підставі яких встановлюються факти та обставини, що мають значення для кримінального провадження.</p>
-
-<h3><p>Запобіжні заходи</h3> - заходи забезпечення кримінального провадження, застосування яких супроводжується обмеженням конституційних прав і свобод громадян, які підозрюються або обвинувачуються у вчинені
-кримінального правопорушення (особисте зобов’язання, особиста порука, застава, домашній арешт, тримання під вартою).</p>
-<h3><p>Види Адміністративних стягнень:</h3>
-1: Попередження
-2: Штраф
-3: Конфіскація спеціального права (посвідчення водія тощо)
-4: Адміністративний арешт</p>
-
-<h3><p>Види Кримінальних стягнень:</h3>
-1: Арешт
-2: Позбавлення волі
-3: Громадські/виправні роботи
-4: Довічне позбавлення волі
-5: Обмеження вол.</p>
-  `,
-  "Субординація": `
-    <p>Службова дисципліна, система службових відносин пов'язана з підпорядкування одних до інших.
-Основними положеннями службової субординації є:
-Молодший за званням беззаперечно підпорядковується старшому і виконує всі його команди.
-Як тільки наказ або завдання старшого за званням виконується, про це необхідно негайно доповісти командуванню.
-Невиконання наказу старшого за званням може спричинити за собою відповідальність аж до кримінальної.
-Співробітники НПУ повинні виконувати команди старшого за званням і традиції вітання.
-Порушення субординації в Національній поліції тягнуть за собою дисциплінарні стягнення.</P>
-
-<h3>Приклади звернення:</h3>
-<p>"Доброго Дня " = " Бажаю здоров'я"
-" Так " = " Так точно "
-" Ні " = " Ніяк ні "
-" Можна " = " Дозвольте "
-" Не знаю " = " Не володію інформацією "
-" Добре " = "Слухаюсь"
-" Як справи, що там " = " Доповісте обстановку ! "
-" Робити !" = "Виконувати!".</p>
-  `,
-  "Статут": `
-    <p>Тут можна додати текст статуту або його витяги для ознайомлення.</p>
-  `,
-  "Графік Роботи": `
-    <p>🟦 Понеділок:
-🕘 09:00 – 21:00 🍴 Перерва: 13:00 – 14:00</p
-
-<p>🟦 Вівторок:
-🕘 09:00 – 21:00 🍴 Перерва: 13:00 – 14:00</p>
-
-<p>🟦 Середа:
-🕘 09:00 – 21:00 🍴 Перерва: 13:00 – 14:00</p>
-
-<p>🟦 Четвер:
-🕘 09:00 – 21:00 🍴 Перерва: 13:00 – 14:00</p>
-
-<p>🟦 П’ятниця:
-🕘 09:00 – 21:00 🍴 Перерва: 13:00 – 14:00</p>
-
-<p>🟦 Субота:
-🕙 10:00 – 20:00 🍴 Перерва: 13:00 – 14:00</p>
-
-<p>🟦 Неділя:
-🕙 10:00 – 20:00 🍴 Перерва: 13:00 – 14:00</p>
-
-🧾<h3> Примітка:</h3>
-<p>🔹 Під час перерви – патрулювання тимчасово зупиняється</p>
-<p>🔹 Обов’язкова присутність у робочі години</p>
-<p>🔹 Порушення графіку карається дисциплінарно.</p>
-  `,
-  "Коди та 10-коди": `
-    <p><h3>ЗАГАЛЬНІ КОДИ:</h3>
-<p>КОД-1: Стан Стабільний</p>
-<p>КОД-2: Порушик у відділку</p>
-<p>КОД-3: Тривога в ГУНП</p>
-<p>КОД-4: Військовий/надзвичайний стан</p>
-<p>КОД-5: Загаьний Збір</p>
-
-<h3>ЗАГАЛЬНІ КОДИ ПАТРУЛЮВАННЯ:</h3>
-<p>КОД 30-10 (Виїхали в патруль м.Київ)</p>
-Приклад: 30-10 Cклад : Бакровський. Код-1 .</p>
-
-<p>КОД 15-10 (Продовжуємо Патруль м.Київ)
-Приклад: 15-10 Cклад : Бакровський. Код-1 .</p>
-
-<p>КОД 20-10 (Закінчуємо патруль м.Київ)
-Приклад: 20-10 Cклад : Бакровський. Код-1 .</p>
-
-
-<p>КОД 2-10 (Виїхали на виклик)
-Приклад: 2-10 Склад : Бакровський...</p>
-
-<p>КОД 3-10 (Виїхали на допомогу держ.організації.Наприклад Набір ЗСУ)
-Приклад: 3-10 Склад : Бакровський... До ЗСУ/ДКВС/СБУ/НПУ Дніпро</p>
-
-<h3>ДОДАТКОВІ КОДИ:</h3>
-<p>КОД 10-20 (Розташування)</p>
-<p>КОД 10-34 (Потрібна Допомога)</p>
-<p>КОД 10-4 (Зрозумів)</p>
-<p>КОД 10-10 (Негативна Відповідь)</p>
-<p>КОД 10-9 (Повторіть/Повторюю)</p>
-
-
-<h3>ДОПОВІДІ ПІД ЧАС ЧЕРГУВАННЯ:</h3>
-<p>Код 10-41 - Початок чергування на посту.
-[Наприклад: "10-41 "Ваш пост". Склад: "Прізвище". код - 1 "].</p>
-
-<p>Код 10-51 - Продовження чергування на посту.
-Приклад: "10-51 "Ваш пост". Склад: "Прізвище". код - 1 "</p>
-
-<p>Код 10-61 - Кінець чергування на посту.
-Приклад: " 10-61 "Ваш пост". Склад: "Прізвище". код - 1 "</p>
-
-
-<h3>Важливо</h3>: <p>Доповідь треба робити кожні 10 хвилин.
-Доповіді не по формі дійсними вважатися не будуть.
-Склад - кількість людей, які присутні разом з вами під час виконання завдання.</p>
-  `,
-  "Міранда": `
-    <p><h3>Правила міранди</h3>
-правило, згідно з яким під час арешту людині, яку арештовують, повинні бути роз'яснені її права і вона має відповісти, що розуміє ці права. Все сказане затриманим до цього не може вважатися доказом.Правила міранди
-правило, згідно з яким під час арешту людині, яку арештовують, повинні бути роз'яснені її права і вона має відповісти, що розуміє ці права. Все сказане затриманим до цього не може вважатися доказом.</p>
-
-<p style="color: red;">Співробітники Національної поліції зобов'язані зачитати особі правило Міранди під час затримання.</p>
-
-<h3>Текст Міранди:</h3>
-<p>Ви затримані ви маєте право зберігати мовчання все що ви скажете буде використано проти вас в суді ви маєте право на приватного адвоката якщо у вас немає коштів вам буде наданий державний адвокат за державні кошти ви маєте право на один телефонний дзвінок який триватиме три хвилини щоб повідомити близьких та рідних про ваше затримання. Вам зрозумілі ваші права?</p>
-  `
-};
-
-function openSubSection(title) {
-  const content = sectionTexts[title] || "<p>Текст відсутній.</p>";
-  screen.innerHTML = `
-    <div class="unlocked-bg"></div>
-    <section class="content-section">
-      <h2>${title}</h2>
-      ${content}
-    </section>
-  `;
-  backBtn.style.display = 'flex';
-  inPoliceMenu = true;
-}
-
-</script>
+    // Перемикач теми
+    document.getElementById('themeToggle').addEventListener('click', () => document.body.classList.toggle('light-theme'));
+  </script>
 </body>
 </html>
