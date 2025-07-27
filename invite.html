@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Вступ до НПУ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body {
+      font-family:'Montserrat',sans-serif;
+      background: radial-gradient(circle at top, #0f172a 0%, #1e293b 100%);
+      color:#f1f5f9;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      min-height:200vh;
+      text-align:center;
+      padding:20px;
+    }
+    body::before {
+      content:"";
+      position:fixed;
+      top:0; left:0; width:100%; height:100%;
+      background: radial-gradient(circle, rgba(0,123,255,0.1) 10%, transparent 50%),
+                  radial-gradient(circle, rgba(255,215,0,0.1) 10%, transparent 50%);
+      background-size:400px 400px;
+      background-position:0 0, 200px 150px;
+      animation:lights 10s infinite alternate;
+      z-index:-1;
+    }
+    @keyframes lights {
+      from { background-position:0 0, 200px 150px; }
+      to { background-position:100px 100px, 250px 200px; }
+    }
+    img.logo {
+      width:200px;
+      margin:40px 0 20px;
+      filter:drop-shadow(0 0 25px #38bdf8);
+      animation:float 4s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100% { transform:translateY(0); }
+      50% { transform:translateY(-10px); }
+    }
+    h1 {
+      color:#facc15;
+      font-size:2.4rem;
+      text-shadow:0 0 20px #2563eb, 0 0 40px #1e40af;
+      margin-bottom:15px;
+      animation:glow 5s ease-in-out infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow:0 0 20px #2563eb,0 0 40px #1e40af; }
+      to { text-shadow:0 0 40px #38bdf8,0 0 80px #facc15; }
+    }
+    p {
+      max-width:700px;
+      line-height:1.7;
+      font-size:1.1rem;
+      margin-bottom:40px;
+      color:#e2e8f0;
+      background:rgba(255,255,255,0.05);
+      padding:15px 20px;
+      border-radius:10px;
+      backdrop-filter:blur(6px);
+      box-shadow:0 0 20px rgba(38,198,218,0.2);
+      opacity:0;
+      transform:translateY(40px);
+      transition:opacity 1s ease, transform 1s ease;
+    }
+    p.visible { opacity:1; transform:translateY(0); }
+    .btn-main {
+      padding:18px 45px;
+      font-size:1.4rem;
+      font-weight:bold;
+      color:#fff;
+      border:none;
+      border-radius:12px;
+      cursor:pointer;
+      background:linear-gradient(90deg,#0057b7,#ffd700,#0057b7);
+      background-size:300% 300%;
+      animation:flagwave 5s infinite linear;
+      box-shadow:0 0 30px rgba(0,87,183,0.5);
+      transition:transform 0.3s, box-shadow 0.3s;
+    }
+    .btn-main:hover {
+      transform:scale(1.1);
+      box-shadow:0 0 50px rgba(255,215,0,0.6);
+    }
+    @keyframes flagwave {
+      0% { background-position:0% 50%; }
+      50% { background-position:100% 50%; }
+      100% { background-position:0% 50%; }
+    }
+    /* Модальне вікно */
+    .modal-overlay {
+      position:fixed; top:0; left:0; width:100%; height:100%;
+      background:rgba(15,23,42,0.85); backdrop-filter:blur(8px);
+      display:flex; align-items:center; justify-content:center;
+      opacity:0; pointer-events:none;
+      transition:opacity 0.5s ease;
+      z-index:1000;
+    }
+    .modal-overlay.active { opacity:1; pointer-events:auto; }
+    .modal {
+      background:rgba(30,41,59,0.97);
+      border-radius:16px;
+      padding:30px;
+      text-align:center;
+      max-width:450px;
+      width:90%;
+      box-shadow:0 0 40px rgba(56,189,248,0.5);
+      transform:scale(0.7);
+      opacity:0;
+      transition:transform 0.4s ease, opacity 0.4s ease;
+      animation:pulse 4s infinite ease-in-out;
+    }
+    .modal-overlay.active .modal { transform:scale(1); opacity:1; }
+    .modal img {
+      width:130px;
+      margin-bottom:15px;
+      filter:drop-shadow(0 0 15px #38bdf8);
+    }
+    .thanks-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+      background: linear-gradient(90deg, #38bdf8, #facc15, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 15px rgba(56,189,248,0.6);
+      animation: glowText 3s infinite ease-in-out;
+    }
+    .thanks-text {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #f1f5f9;
+      margin-bottom: 25px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s forwards ease-in-out 0.5s;
+    }
+    @keyframes glowText {
+      0%, 100% { text-shadow: 0 0 15px rgba(56,189,248,0.6), 0 0 30px rgba(250,204,21,0.3); }
+      50% { text-shadow: 0 0 30px rgba(250,204,21,0.8), 0 0 60px rgba(56,189,248,0.5); }
+    }
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes pulse {
+      0%,100% { transform:scale(1); }
+      50% { transform:scale(1.03); }
+    }
+    .btn-upa {
+      padding:14px 35px;
+      font-size:1.2rem;
+      font-weight:bold;
+      color:#fff;
+      border:none;
+      border-radius:10px;
+      cursor:pointer;
+      background:linear-gradient(90deg,#000,#c00,#f00,#000);
+      background-size:400% 400%;
+      animation:flagwave 4s infinite linear;
+      box-shadow:0 0 35px rgba(255,0,0,0.4);
+      transition:transform 0.3s, box-shadow 0.3s;
+    }
+    .btn-upa:hover {
+      transform:scale(1.1);
+      box-shadow:0 0 50px rgba(255,0,0,0.6);
+    }
+  </style>
+</head>
+<body>
+
+  <img class="logo" src="https://i.postimg.cc/KcPf8CTJ/removebg-preview.png" alt="Логотип НПУ">
+  <h1>Стань частиною Національної Поліції України</h1>
+  <p id="intro-text">
+    Ми шукаємо відважних і відповідальних людей, готових захищати спокій громадян та служити Україні.
+    Приєднавшись до нас, ви отримаєте стабільну роботу, гідну зарплатню, професійне навчання та шанс змінювати країну на краще.
+  </p>
+  <button class="btn-main" onclick="openModal()">Вступити</button>
+
+  <!-- Модальне вікно -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal">
+      <img src="https://i.postimg.cc/KcPf8CTJ/removebg-preview.png" alt="Лого">
+      <h2 class="thanks-title">Дякуємо за ваш вибір!</h2>
+      <p class="thanks-text">
+        Ми цінуємо кожного нового співробітника  
+        і зробимо все, щоб ваш шлях у НПУ був успішним і натхненним.
+      </p>
+      <button class="btn-upa" onclick="openForm()">Перейти до анкети</button>
+    </div>
+  </div>
+
+  <audio id="open-sound" src="https://cdn.pixabay.com/download/audio/2023/10/24/audio_dfa4d7c2a7.mp3?filename=digital-notification-259445.mp3"></audio>
+
+  <script>
+    const modal=document.getElementById('modal');
+    const sound=document.getElementById('open-sound');
+    function openModal(){ 
+      modal.classList.add('active'); 
+      sound.currentTime=0; 
+      sound.play(); 
+    }
+    function openForm(){
+      modal.classList.remove('active');
+      window.open('https://forms.gle/MYT5ZsVkP3sYuDRy8');
+    }
+    modal.addEventListener('click',e=>{ if(e.target===modal) modal.classList.remove('active'); });
+
+    window.addEventListener('scroll',()=>{
+      const intro=document.getElementById('intro-text');
+      const trigger=window.innerHeight*0.8;
+      if(intro.getBoundingClientRect().top<trigger) intro.classList.add('visible');
+    });
+  </script>
+
+</body>
+</html>
