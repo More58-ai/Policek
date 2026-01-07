@@ -7,235 +7,299 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --blue:#0a192f;
-      --gold:#facc15;
-      --white:#ffffff;
-      --accent:#1e40af;
+      --blue: #0a192f;
+      --gold: #facc15;
+      --white: #ffffff;
+      --accent: #1e40af;
+      --red: #ef4444; /* Для кнопки скарги */
     }
+    
     * {margin:0; padding:0; box-sizing:border-box;}
+    
     body {
       font-family:'Montserrat',sans-serif;
-      background:var(--blue);
-      color:var(--white);
-      line-height:1.6;
+      background: var(--blue);
+      color: var(--white);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Контейнер для снігу */
+    #snow-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: white;
+      font-size: 1em;
+      user-select: none;
+      pointer-events: none;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      to { transform: translateY(105vh); }
     }
 
     /* Header */
     header {
-      background:linear-gradient(135deg,#0a192f 0%,#112240 100%);
-      text-align:center;
-      padding:40px 20px 30px;
-      border-bottom:4px solid var(--gold);
+      background: linear-gradient(135deg, #0a192f 0%, #112240 100%);
+      text-align: center;
+      padding: 50px 20px 40px;
+      border-bottom: 4px solid var(--gold);
+      position: relative;
     }
+    
     header img {
-      width:110px; filter:drop-shadow(0 0 6px rgba(0,0,0,0.4));
+      width: 120px; 
+      filter: drop-shadow(0 0 10px rgba(250, 204, 21, 0.3));
+      animation: pulse 3s infinite ease-in-out;
     }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
     header h1 {
-      margin-top:15px;
-      font-size:2.4rem;
-      font-weight:700;
-      color:var(--gold);
-      text-transform:uppercase;
-      letter-spacing:1px;
-    }
-    header p {
-      margin-top:5px;
-      font-size:1.1rem;
-      color:#cbd5e1;
+      margin-top: 20px;
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 2px;
     }
 
     /* Навігація */
     nav {
-      display:flex;
-      justify-content:center;
-      flex-wrap:wrap;
-      background:#112240;
-      padding:10px 0;
-      gap:15px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      background: #112240;
+      padding: 15px 0;
+      gap: 15px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     }
+
     nav a {
-      display:inline-block;
-      text-decoration:none;
-      color:var(--white);
-      padding:12px 24px;
-      font-weight:600;
-      border:2px solid var(--gold);
-      border-radius:6px;
-      transition:all .3s ease;
-      background:transparent;
+      text-decoration: none;
+      color: var(--white);
+      padding: 12px 20px;
+      font-weight: 600;
+      border: 2px solid var(--gold);
+      border-radius: 8px;
+      transition: all .3s ease;
+      background: rgba(255,255,255,0.05);
     }
+
     nav a:hover {
-      background:var(--gold);
-      color:var(--blue);
-      transform:translateY(-2px);
-      box-shadow:0 4px 10px rgba(0,0,0,0.3);
+      background: var(--gold);
+      color: var(--blue);
+      transform: translateY(-3px);
+    }
+
+    /* Стиль для кнопки Скарги */
+    nav a.btn-complaint {
+      border-color: var(--red);
+      background: rgba(239, 68, 68, 0.15);
+    }
+
+    nav a.btn-complaint:hover {
+      background: var(--red);
+      color: white;
+      box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
     }
 
     /* Основний контент */
     main {
-      max-width:1200px;
-      margin:40px auto;
-      padding:0 20px;
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+      animation: fadeInUp 1s ease-out;
     }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     section {
-      background:rgba(255,255,255,0.03);
-      border-left:4px solid var(--gold);
-      border-radius:6px;
-      padding:30px;
-      margin-bottom:30px;
-      box-shadow:0 0 15px rgba(0,0,0,0.3);
-      backdrop-filter:blur(6px);
-      transition:transform .3s;
+      background: rgba(255, 255, 255, 0.05);
+      border-left: 5px solid var(--gold);
+      border-radius: 12px;
+      padding: 35px;
+      margin-bottom: 35px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     }
-    section:hover {
-      transform:translateY(-3px);
-    }
+
     section h2 {
-      color:var(--gold);
-      font-size:1.8rem;
-      margin-bottom:10px;
+      color: var(--gold);
+      font-size: 2rem;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     /* Cards */
     .task-grid {
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-      gap:20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      margin-top: 20px;
     }
+
     .task-card {
-      background:rgba(255,255,255,0.04);
-      border:1px solid rgba(255,255,255,0.1);
-      padding:20px;
-      border-radius:6px;
-      transition:transform .3s,box-shadow .3s;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 25px;
+      border-radius: 12px;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
+
     .task-card:hover {
-      transform:translateY(-5px);
-      box-shadow:0 0 20px rgba(250,204,21,0.3);
+      transform: scale(1.05);
+      background: rgba(255, 255, 255, 0.07);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+      border-color: var(--gold);
     }
+
     .task-card h3 {
-      color:var(--gold);
-      margin-bottom:8px;
+      color: var(--gold);
+      margin-bottom: 12px;
     }
 
-    /* Footer */
     footer {
-      text-align:center;
-      padding:25px;
-      background:#112240;
-      border-top:4px solid var(--gold);
-      font-size:0.9rem;
-      color:#94a3b8;
+      text-align: center;
+      padding: 40px;
+      background: #060e1a;
+      border-top: 3px solid var(--gold);
+      color: #94a3b8;
     }
 
-    /* Кнопка наверх */
     #toTop {
-      position:fixed;
-      bottom:30px; right:30px;
-      background:var(--gold);
-      color:var(--blue);
-      border:none;
-      padding:12px 16px;
-      border-radius:50%;
-      font-size:20px;
-      cursor:pointer;
-      display:none;
-      transition:background .3s,transform .2s;
-      box-shadow:0 2px 8px rgba(0,0,0,0.3);
-    }
-    #toTop:hover {
-      background:#ffe55c;
-      transform:scale(1.1);
-    }
-
-    /* Додаткова універсальна кнопка */
-    .btn {
-      display:inline-block;
-      padding:12px 24px;
-      background:var(--gold);
-      color:var(--blue);
-      font-weight:600;
-      border:none;
-      border-radius:6px;
-      cursor:pointer;
-      transition:background .3s,transform .2s;
-    }
-    .btn:hover {
-      background:#ffe55c;
-      transform:translateY(-2px);
+      position: fixed;
+      bottom: 30px; 
+      right: 30px;
+      background: var(--gold);
+      color: var(--blue);
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      font-size: 24px;
+      cursor: pointer;
+      display: none;
+      z-index: 1000;
+      transition: 0.3s;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     }
 
     @media(max-width:600px){
-      header h1{font-size:1.8rem;}
-      header img{width:80px;}
-      nav a{padding:10px 15px;}
+      header h1{font-size:1.6rem;}
+      nav { gap: 10px; padding: 10px; }
+      nav a { padding: 8px 12px; font-size: 0.9rem; }
     }
   </style>
 </head>
 <body>
 
+<div id="snow-container"></div>
+
 <header>
   <img src="https://i.postimg.cc/PxNj31gc/removebg-preview.png" alt="Логотип НПУ">
   <h1>Національна поліція України</h1>
-  <p>Офіційний інформаційний портал</p>
+  <p>Честь. Опіка. Закон.</p>
 </header>
 
 <nav>
-  <a href="https://more58-ai.github.io/Policek/tablet.html">Планшет НПУ</a>
-  <a href="#" onclick="openNews()">Новини та оголошення</a>
-  <a href="https://more58-ai.github.io/Policek/invite.html">Рапорт на вступ</a>
+  <a href="https://more58-ai.github.io/Policek/tablet.html">📟 Планшет НПУ</a>
+  <a href="#" onclick="openNews()">📰 Новини</a>
+  <a href="https://more58-ai.github.io/Policek/invite.html">📝 Вступ до лав</a>
+  <a href="https://more58-ai.github.io/Policek/complaint" class="btn-complaint">⚠️ Подати скаргу</a>
 </nav>
 
 <main>
   <section>
-    <h2>Про підрозділ</h2>
-    <p>Національна поліція України працює цілодобово, щоб гарантувати правопорядок і безпеку. Ми патрулюємо вулиці, розслідуємо злочини та захищаємо громадян.</p>
+    <h2>🏛️ Про підрозділ</h2>
+    <p>Національна поліція України — це центральний орган виконавчої влади, який служить суспільству шляхом забезпечення охорони прав і свобод людини, протидії злочинності та підтримання публічної безпеки і порядку.</p>
   </section>
 
   <section>
-    <h2>Нова технологія: планшет НПУ</h2>
-    <p>У 2025 році впроваджено <strong>планшет НПУ</strong> — пристрій для патрульних і громадян. Він дозволяє швидко отримувати дані, фіксувати правопорушення та координувати роботу підрозділів у режимі реального часу.</p>
+    <h2>📱 Цифрова трансформація</h2>
+    <p>Завдяки впровадженню сучасного <strong>планшета НПУ</strong>, час реагування на виклики скоротився вдвічі. Система дозволяє миттєво перевіряти дані по базах МВС та оформлювати протоколи на місці події.</p>
   </section>
 
   <section>
-    <h2>Наші основні завдання</h2>
+    <h2>🛡️ Основні напрямки роботи</h2>
     <div class="task-grid">
       <div class="task-card">
-        <h3>Патрулювання вулиць</h3>
-        <p>Щоденна присутність патрулів на вулицях гарантує безпеку. Використання GPS та сучасних технологій дозволяє швидко реагувати на виклики.</p>
+        <h3>🚨 Патрулювання</h3>
+        <p>Забезпечення безпеки на дорогах та в громадських місцях 24/7.</p>
       </div>
       <div class="task-card">
-        <h3>Захист громадян</h3>
-        <p>Запобігання злочинам і оперативна допомога кожному, хто потребує захисту, — наш пріоритет.</p>
+        <h3>⚖️ Захист прав</h3>
+        <p>Надання невідкладної допомоги постраждалим та відновлення справедливості.</p>
       </div>
       <div class="task-card">
-        <h3>Робота з громадою</h3>
-        <p>Проводимо профілактичні заходи та взаємодіємо з населенням для безпечного життя.</p>
+        <h3>🤝 Громадська безпека</h3>
+        <p>Проведення просвітницьких заходів у школах та співпраця з громадами.</p>
       </div>
     </div>
   </section>
-
-
+</main>
 
 <footer>
-  &copy; 2025 Національна поліція України. Всі права захищено.
+  <p>&copy; 2025 Національна поліція України. Служити та захищати!</p>
 </footer>
 
 <button id="toTop">↑</button>
 
 <script>
+  // Функція снігу
+  function createSnowflake() {
+    const snowflake = document.createElement('div');
+    snowflake.classList.add('snowflake');
+    snowflake.innerHTML = '❄';
+    snowflake.style.left = Math.random() * 100 + 'vw';
+    snowflake.style.animationDuration = Math.random() * 3 + 2 + 's'; 
+    snowflake.style.opacity = Math.random();
+    snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
+    
+    document.getElementById('snow-container').appendChild(snowflake);
+    
+    setTimeout(() => {
+      snowflake.remove();
+    }, 5000);
+  }
+
+  setInterval(createSnowflake, 150);
+
   // Кнопка наверх
   window.addEventListener('scroll',()=>{
-    document.getElementById('toTop').style.display=window.scrollY>200?'block':'none';
+    document.getElementById('toTop').style.display=window.scrollY>300?'block':'none';
   });
+  
   document.getElementById('toTop').addEventListener('click',()=>{
     window.scrollTo({top:0,behavior:'smooth'});
   });
+
   function openNews(){
-    alert('Тут будуть офіційні новини та оголошення.');
+    alert('Система новин оновлюється. Будь ласка, завітайте пізніше!');
   }
 </script>
 
 </body>
 </html>
-
