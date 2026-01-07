@@ -5,102 +5,105 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Підрозділи НПУ</title>
   <style>
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to bottom, #0057b7, #ffd700);
+      background: linear-gradient(180deg, #0057b7 0%, #002d5e 100%);
+      background-attachment: fixed;
       color: #fff;
+      min-height: 100vh;
     }
 
     header {
       text-align: center;
-      padding: 20px;
-      background: rgba(0,0,0,0.7);
-      border-bottom: 4px solid red;
+      padding: 30px 20px;
+      background: rgba(0, 0, 0, 0.8);
+      border-bottom: 4px solid #cc0000;
     }
 
-    header img {
-      max-height: 120px;
-      display: block;
-      margin: 0 auto;
-    }
+    header img { max-height: 120px; margin-bottom: 10px; }
 
     header h1 {
-      font-size: 2.5rem;
-      margin-top: 10px;
+      font-size: 2.2rem;
+      margin: 0;
       color: #ffd700;
       text-shadow: 2px 2px 5px black;
     }
 
     .intro {
       text-align: center;
-      padding: 30px 15px;
-      background: rgba(0,0,0,0.5);
-      font-size: 1.4rem;
+      padding: 40px 15px;
+      max-width: 900px;
+      margin: 0 auto;
+      font-size: 1.3rem;
       line-height: 1.6;
     }
 
     .units {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
-      padding: 40px;
-      max-width: 1200px;
-      margin: auto;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      padding: 20px;
+      max-width: 1300px;
+      margin: 0 auto 50px auto;
     }
 
     .unit-card {
-      background: #fff;
-      color: #000;
-      border-radius: 20px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+      background: #ffffff;
+      color: #1a1a1a;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
       overflow: hidden;
-      transition: transform 0.4s, box-shadow 0.4s;
-      border: 3px solid #0057b7;
-      position: relative;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      border: 2px solid #0057b7;
     }
 
     .unit-card:hover {
-      transform: translateY(-10px) scale(1.03);
-      box-shadow: 0 12px 25px rgba(255,0,0,0.5);
+      transform: translateY(-8px);
+      box-shadow: 0 12px 25px rgba(255, 215, 0, 0.3);
+      border-color: #ffd700;
     }
 
     .unit-card img {
       width: 100%;
-      max-height: 180px;
+      height: 180px;
       object-fit: contain;
-      background: #f0f0f0;
-      padding: 10px;
+      background: #f8f9fa;
+      padding: 15px;
     }
 
     .unit-card h2 {
       text-align: center;
       margin: 0;
       padding: 15px;
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       background: #0057b7;
       color: #ffd700;
-      text-shadow: 1px 1px 2px black;
     }
 
     .unit-card p {
       padding: 20px;
-      font-size: 1.1rem;
-      text-align: center;
+      font-size: 1.05rem;
       line-height: 1.5;
+      flex-grow: 1;
+      text-align: left;
     }
 
     footer {
       background: #000;
-      color: #fff;
+      color: #eee;
       text-align: center;
-      padding: 15px;
-      font-size: 0.9rem;
-      border-top: 3px solid red;
+      padding: 20px;
+      border-top: 3px solid #cc0000;
     }
   </style>
 </head>
 <body>
+
   <header>
     <img src="https://i.postimg.cc/MKSQrjGb/removebg-preview.png" alt="Лого НПУ">
     <h1>Підрозділи Національної поліції України</h1>
@@ -108,7 +111,7 @@
 
   <div class="intro">
     Вітаємо! Тут ви знайдете інформацію про ключові підрозділи 
-    <b style="color:red;">НПУ</b>, які захищають спокій, безпеку 
+    <b style="color:#ff4d4d;">НПУ</b>, які захищають спокій, безпеку 
     та законність на території України.
   </div>
 
@@ -116,34 +119,37 @@
     <div class="unit-card">
       <img src="https://i.postimg.cc/WpnNTDn7/removebg-preview.png" alt="КОРД">
       <h2>КОРД</h2>
-      <p><b>Корпус оперативно-раптової дії</b> — елітний спецпідрозділ для боротьби 
-         з організованою злочинністю, терористами та проведення складних спецоперацій.</p>
+      <p><b>Корпус оперативно-раптової дії</b> — ударний підрозділ поліції, призначений для затримання особливо небезпечних злочинців, звільнення заручників та виконання надскладних бойових завдань.</p>
     </div>
 
     <div class="unit-card">
-      <img src="https://i.postimg.cc/MTww8xf4/removebg-preview.png" alt="НА">
-      <h2>НА</h2>
-      <p><b>Навчальна Академія</b> — заклад підготовки та перепідготовки правоохоронців, 
-         що формує нове покоління професійної поліції.</p>
+      <img src="https://i.postimg.cc/MTww8xf4/removebg-preview.png" alt="НАВС">
+      <h2>НАВС</h2>
+      <p><b>Національна академія внутрішніх справ</b> — провідний вищий навчальний заклад МВС, що здійснює підготовку висококваліфікованих офіцерів, слідчих та експертів для забезпечення правопорядку.</p>
     </div>
 
     <div class="unit-card">
       <img src="https://i.postimg.cc/DfgXHw49/removebg-preview.png" alt="ПП">
-      <h2>Патрульна поліція (ПП)</h2>
-      <p><b>Патрульна поліція</b> — основна служба, яка підтримує громадський порядок, 
-         забезпечує безпеку дорожнього руху та оперативне реагування на виклики.</p>
+      <h2>Патрульна поліція</h2>
+      <p>Служба, яка першою приходить на допомогу. Забезпечує цілодобовий патруль міст, публічну безпеку та дотримання правил дорожнього руху.</p>
     </div>
 
     <div class="unit-card">
       <img src="https://i.postimg.cc/DfJzdfdQ/removebg-preview.png" alt="МотоБат">
       <h2>МотоБат</h2>
-      <p><b>Мотоциклетний батальйон</b> — швидкісний та мобільний підрозділ, 
-         що виконує супровід колон та миттєве реагування на надзвичайні ситуації.</p>
+      <p>Мобільний підрозділ на мотоциклах, здатний оперативно прибути на місце події в умовах інтенсивного трафіку та забезпечувати супровід важливих об'єктів.</p>
+    </div>
+    
+    <div class="unit-card">
+      <img src="https://i.postimg.cc/j26bYv03/gsu.png" alt="ГСУ">
+      <h2>ГСУ</h2>
+      <p><b>Головне слідче управління</b> — координує роботу всіх слідчих підрозділів країни, займаючись розкриттям тяжких злочинів та збором доказової бази для правосуддя.</p>
     </div>
   </div>
 
   <footer>
-    &copy; 2025 Національна поліція України. Всі права захищено.
+    &copy; 2026 Національна поліція України. Всі права захищено.
   </footer>
+
 </body>
 </html>
