@@ -1,268 +1,209 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <title>Подача скарг на громадян</title>
-  <style>
-    body {
-      margin: 0;
-      background-color: #0a1f3d;
-      font-family: Arial, sans-serif;
-      color: #fff;
-      padding: 20px;
-    }
-    header {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    header img {
-      width: 200px;
-    }
-    h1 {
-      color: #ffd700;
-    }
-    form {
-      max-width: 600px;
-      margin: 0 auto;
-      background-color: #112b50;
-      padding: 20px;
-      border-radius: 12px;
-      border: 2px solid #ffd700;
-    }
-    label {
-      display: block;
-      margin-top: 15px;
-      color: #ffd700;
-    }
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border: none;
-      border-radius: 8px;
-      background-color: #0d2747;
-      color: #fff;
-    }
-    button {
-      margin-top: 20px;
-      padding: 12px 20px;
-      background-color: #ffd700;
-      color: #0a1f3d;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #e6c200;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>НПУ | Електронна Система</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --blue: #0057b7; --yellow: #ffd700; --bg: #05111d; --card: #0a1a2a; }
+        body { font-family: 'Montserrat', sans-serif; background: var(--bg); color: white; margin: 0; min-height: 100vh; overflow-x: hidden; }
+        #particles-js { position: fixed; inset: 0; z-index: -1; }
 
-    /* Кнопка мої скарги */
-    #viewComplaintsBtn {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background-color: #ffd700;
-      color: #0a1f3d;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1rem;
-      font-weight: bold;
-      z-index: 100;
-    }
+        .logo-text { font-weight: 900; text-transform: uppercase; text-align: center; color: white; text-shadow: 0 0 10px var(--blue); }
+        .top-nav { position: fixed; top: 20px; right: 20px; display: flex; gap: 10px; z-index: 100; }
+        .nav-btn { background: var(--blue); border: 2px solid white; padding: 10px 20px; border-radius: 50px; color: white; font-weight: 800; cursor: pointer; transition: 0.3s; }
 
-    /* Фон */
-    #overlay {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      z-index: 50;
-    }
+        .wrapper { display: flex; flex-direction: column; align-items: center; padding: 60px 20px; }
+        .form-box { background: var(--card); padding: 35px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.1); width: 100%; max-width: 500px; box-shadow: 0 20px 50px rgba(0,0,0,0.6); backdrop-filter: blur(10px); }
+        
+        input, textarea { width: 100%; padding: 14px; margin: 10px 0 15px; border-radius: 12px; border: 1px solid #1a3a5a; background: #000; color: white; box-sizing: border-box; outline: none; }
+        .submit-btn { width: 100%; padding: 18px; border-radius: 15px; border: none; background: linear-gradient(45deg, var(--blue), #003d80); color: white; font-weight: 900; cursor: pointer; text-transform: uppercase; }
 
-    /* Вікно */
-    #complaintsWindow {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: #112b50;
-      padding: 20px;
-      border: 3px solid #ffd700;
-      border-radius: 12px;
-      width: 400px;
-      max-height: 80%;
-      overflow-y: auto;
-      text-align: left;
-      z-index: 101;
-    }
-    .complaint {
-      background: #0d2747;
-      padding: 10px;
-      border-radius: 8px;
-      margin-bottom: 10px;
-    }
-    #closeComplaintsBtn {
-      display: block;
-      margin: 0 auto;
-      margin-top: 15px;
-      background-color: #ffd700;
-      color: #0a1f3d;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 5000; align-items: center; justify-content: center; padding: 15px; }
+        .modal-content { background: #071624; width: 100%; max-width: 800px; height: 85vh; border-radius: 30px; border: 1px solid var(--blue); position: relative; padding: 30px; display: flex; flex-direction: column; }
+        .scroll-area { flex: 1; overflow-y: auto; margin-top: 20px; padding-right: 10px; }
 
-    /* Повідомлення після відправки */
-    #thankYouWindow {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: #112b50;
-      padding: 20px;
-      border: 3px solid #ffd700;
-      border-radius: 12px;
-      width: 400px;
-      text-align: center;
-      z-index: 101;
-      color: #ffd700;
-    }
-    #closeThankYouBtn {
-      margin-top: 15px;
-      background-color: #ffd700;
-      color: #0a1f3d;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-  </style>
+        /* Картка скарги */
+        .complaint-card { background: rgba(255,255,255,0.05); padding: 15px 20px; border-radius: 15px; margin-bottom: 10px; border-left: 5px solid var(--blue); cursor: pointer; transition: 0.2s; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 14px; }
+        .card-body { display: none; margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); cursor: default; }
+        .card-body.active { display: block; }
+
+        .tag { padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 900; text-transform: uppercase; color: white; }
+        .tag-waiting { background: #ff8c00; }
+        .tag-approved { background: #22c55e; }
+        .tag-rejected { background: #ef4444; }
+
+        .btn-group { display: flex; gap: 5px; margin-top: 15px; }
+        .adm-btn { flex: 1; padding: 10px; border-radius: 8px; border: none; font-weight: 700; cursor: pointer; color: white; font-size: 10px; }
+
+        .close-x { position: absolute; top: 20px; right: 25px; font-size: 35px; cursor: pointer; }
+    </style>
 </head>
 <body>
 
-  <button id="viewComplaintsBtn">Мої скарги</button>
+<div id="particles-js"></div>
 
-  <header>
-    <img src="https://i.postimg.cc/2575QP74/removebg-preview.png" alt="НПУ Лого">
-    <h1>Подача скарг на громадян</h1>
-  </header>
+<div class="top-nav">
+    <button class="nav-btn" onclick="openM('playerAuthModal')"><i class="fas fa-search"></i> МОЇ СКАРГИ</button>
+    <button class="nav-btn" style="background: #111;" onclick="checkAccess()"><i class="fas fa-shield-alt"></i> БАЗА НПУ</button>
+</div>
 
-  <form id="complaintForm">
-    <label>Ваше Ім’я та Прізвище:</label>
-    <input type="text" id="yourName" required>
+<div class="wrapper">
+    <header style="text-align: center; margin-bottom: 30px;">
+        <img src="https://i.postimg.cc/2575QP74/removebg-preview.png" style="width: 100px;">
+        <h2 class="logo-text">Електронні скарги НПУ</h2>
+    </header>
 
-    <label>Ім’я та Прізвище громадянина, на якого скарга:</label>
-    <input type="text" id="citizenName" required>
+    <div class="form-box">
+        <input type="text" id="sName" placeholder="Ваш Нікнейм">
+        <input type="text" id="cName" placeholder="Нікнейм порушника">
+        <textarea id="desc" rows="4" placeholder="Опишіть ситуацію..."></textarea>
+        <input type="text" id="proofLink" placeholder="Посилання на докази">
+        <button class="submit-btn" onclick="sendData()">ВІДПРАВИТИ</button>
+    </div>
+</div>
 
-    <label>Опишіть ситуацію:</label>
-    <textarea id="details" rows="5" required></textarea>
+<div id="playerAuthModal" class="modal">
+    <div class="modal-content" style="max-width: 400px; height: auto;">
+        <span class="close-x" onclick="closeM('playerAuthModal')">&times;</span>
+        <h3 class="logo-text">ПЕРЕВІРКА</h3>
+        <input type="text" id="playerSearch" placeholder="Ваш нікнейм">
+        <button class="submit-btn" onclick="searchMyComplaints()">ЗНАЙТИ</button>
+    </div>
+</div>
 
-    <label>Докази (посилання на фото, наприклад postimages):</label>
-    <input type="text" id="evidence">
+<div id="playerListModal" class="modal">
+    <div class="modal-content">
+        <span class="close-x" onclick="closeM('playerListModal')">&times;</span>
+        <h2 class="logo-text" id="pTitle">Ваші скарги</h2>
+        <div id="pList" class="scroll-area"></div>
+    </div>
+</div>
 
-    <button type="submit">Подати скаргу</button>
-  </form>
+<div id="dbModal" class="modal">
+    <div class="modal-content">
+        <span class="close-x" onclick="closeM('dbModal')">&times;</span>
+        <h2 class="logo-text" style="text-align: left;"><i class="fas fa-database"></i> БАЗА ДАНИХ НПУ</h2>
+        <div id="adminList" class="scroll-area"></div>
+    </div>
+</div>
 
-  <!-- Фон -->
-  <div id="overlay"></div>
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+    import { getDatabase, ref, push, onValue, update, get, child } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
 
-  <!-- Вікно моїх скарг -->
-  <div id="complaintsWindow">
-    <h2>Мої скарги</h2>
-    <div id="complaintsList"></div>
-    <button id="closeComplaintsBtn">Закрити</button>
-  </div>
+    const cfg = { apiKey: "AIzaSyCK5b9Ls2eWy1FGPjq738wVRWBJ8KhLdPg", databaseURL: "https://complaint-dbe8b-default-rtdb.firebaseio.com/" };
+    const app = initializeApp(cfg);
+    const db = getDatabase(app);
 
-  <!-- Повідомлення після відправки -->
-  <div id="thankYouWindow">
-    <p>Дякуємо за подану скаргу.</p>
-    <p>Перейдіть у розділ "Мої скарги", зробіть скріншот цієї скарги та відправте Генералу або Полковнику Рома Кабіна.</p>
-    <button id="closeThankYouBtn">Закрити</button>
-  </div>
+    let allComplaints = {};
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const form = document.getElementById('complaintForm');
-      const complaints = JSON.parse(localStorage.getItem('complaints') || '[]');
-
-      const overlay = document.getElementById('overlay');
-      const complaintsWindow = document.getElementById('complaintsWindow');
-      const complaintsList = document.getElementById('complaintsList');
-      const viewBtn = document.getElementById('viewComplaintsBtn');
-      const closeBtn = document.getElementById('closeComplaintsBtn');
-
-      const thankYouWindow = document.getElementById('thankYouWindow');
-      const closeThankYouBtn = document.getElementById('closeThankYouBtn');
-
-      function saveComplaints() {
-        localStorage.setItem('complaints', JSON.stringify(complaints));
-      }
-
-      function renderComplaints() {
-        complaintsList.innerHTML = '';
-        if (complaints.length === 0) {
-          complaintsList.innerHTML = '<p>Скарг поки що немає.</p>';
-          return;
-        }
-        complaints.forEach(c => {
-          const div = document.createElement('div');
-          div.className = 'complaint';
-          div.innerHTML = `
-            <p><strong>Відправник:</strong> ${c.yourName}</p>
-            <p><strong>На кого скарга:</strong> ${c.citizenName}</p>
-            <p><strong>Ситуація:</strong> ${c.details}</p>
-            <p><strong>Докази:</strong> ${c.evidence || '—'}</p>
-          `;
-          complaintsList.appendChild(div);
-        });
-      }
-
-      // Відправка скарги
-      form.addEventListener('submit', e => {
-        e.preventDefault();
-        const newComplaint = {
-          yourName: document.getElementById('yourName').value.trim(),
-          citizenName: document.getElementById('citizenName').value.trim(),
-          details: document.getElementById('details').value.trim(),
-          evidence: document.getElementById('evidence').value.trim()
-        };
-        complaints.push(newComplaint);
-        saveComplaints();
-        form.reset();
-
-        // Показуємо подяку
-        overlay.style.display = 'block';
-        thankYouWindow.style.display = 'block';
-      });
-
-      // Закрити подяку
-      closeThankYouBtn.addEventListener('click', () => {
-        thankYouWindow.style.display = 'none';
-        overlay.style.display = 'none';
-      });
-
-      // Відкрити "Мої скарги"
-      viewBtn.addEventListener('click', () => {
-        renderComplaints();
-        overlay.style.display = 'block';
-        complaintsWindow.style.display = 'block';
-      });
-
-      // Закрити "Мої скарги"
-      closeBtn.addEventListener('click', () => {
-        complaintsWindow.style.display = 'none';
-        overlay.style.display = 'none';
-      });
+    // Постійне оновлення бази для адміна
+    onValue(ref(db, 'complaints'), (snapshot) => {
+        allComplaints = snapshot.val() || {};
+        renderAdmin();
     });
-  </script>
+
+    window.sendData = () => {
+        const d = {
+            from: document.getElementById('sName').value.trim(),
+            target: document.getElementById('cName').value.trim(),
+            text: document.getElementById('desc').value.trim(),
+            link: document.getElementById('proofLink').value.trim(),
+            status: "waiting", 
+            date: new Date().toLocaleString('uk-UA')
+        };
+        if(!d.from || !d.text) return alert("Заповніть форму!");
+        push(ref(db, 'complaints'), d).then(() => { alert("Скаргу надіслано!"); location.reload(); });
+    };
+
+    // ПЕРЕГЛЯД ДЛЯ НПУ (Акордеон)
+    function renderAdmin() {
+        const list = document.getElementById('adminList');
+        if(!list) return;
+        list.innerHTML = "";
+        Object.entries(allComplaints).reverse().forEach(([id, item]) => {
+            const card = document.createElement('div');
+            card.className = 'complaint-card';
+            card.innerHTML = `
+                <div class="card-header" onclick="toggleCard('${id}')">
+                    <span><i class="fas fa-user-circle"></i> Заявник: ${item.from}</span>
+                    <span class="tag tag-${item.status}">${getStatusName(item.status)}</span>
+                </div>
+                <div id="body-${id}" class="card-body">
+                    <p><b>Порушник:</b> ${item.target}</p>
+                    <p><b>Опис:</b> ${item.text}</p>
+                    <p><b>Дата:</b> ${item.date}</p>
+                    ${item.link ? `<a href="${item.link}" target="_blank" style="color:var(--yellow)">🔗 Докази за посиланням</a>` : ''}
+                    <div class="btn-group">
+                        <button class="adm-btn" style="background:#ff8c00" onclick="setStatus('${id}', 'waiting')">На розгляд</button>
+                        <button class="adm-btn" style="background:#22c55e" onclick="setStatus('${id}', 'approved')">Схвалити</button>
+                        <button class="adm-btn" style="background:#ef4444" onclick="setStatus('${id}', 'rejected')">Відмовити</button>
+                    </div>
+                </div>
+            `;
+            list.appendChild(card);
+        });
+    }
+
+    // ПОШУК ДЛЯ ГРАВЦЯ
+    window.searchMyComplaints = async () => {
+        const nick = document.getElementById('playerSearch').value.trim().toLowerCase();
+        const list = document.getElementById('pList');
+        if(!nick) return alert("Введіть нікнейм!");
+
+        list.innerHTML = "<p style='text-align:center'>Шукаємо ваші записи...</p>";
+        
+        const snapshot = await get(child(ref(db), 'complaints'));
+        list.innerHTML = "";
+        
+        if (snapshot.exists()) {
+            const data = snapshot.val();
+            let count = 0;
+            Object.values(data).reverse().forEach(item => {
+                if(item.from && item.from.toLowerCase() === nick) {
+                    count++;
+                    list.innerHTML += `
+                        <div class="complaint-card" style="cursor:default">
+                            <div class="card-header">
+                                <span>На: ${item.target}</span>
+                                <span class="tag tag-${item.status}">${getStatusName(item.status)}</span>
+                            </div>
+                            <p style="font-size:12px; margin-top:10px; opacity:0.8">${item.text}</p>
+                        </div>
+                    `;
+                }
+            });
+            if(count === 0) list.innerHTML = "<p style='text-align:center'>Скарг не знайдено.</p>";
+        }
+        closeM('playerAuthModal');
+        document.getElementById('playerListModal').style.display = 'flex';
+    };
+
+    window.toggleCard = (id) => {
+        const b = document.getElementById(`body-${id}`);
+        const active = b.classList.contains('active');
+        document.querySelectorAll('.card-body').forEach(el => el.classList.remove('active'));
+        if(!active) b.classList.add('active');
+    };
+
+    window.setStatus = (id, s) => update(ref(db, `complaints/${id}`), { status: s });
+    
+    function getStatusName(s) {
+        if(s === 'approved') return 'Схвалено';
+        if(s === 'rejected') return 'Відмова';
+        return 'Розгляд';
+    }
+
+    window.checkAccess = () => { document.getElementById('dbModal').style.display = 'flex'; };
+    window.closeM = (id) => document.getElementById(id).style.display = 'none';
+    window.openM = (id) => document.getElementById(id).style.display = 'flex';
+
+    particlesJS("particles-js", { "particles": { "number": { "value": 20 }, "move": { "speed": 1 } } });
+</script>
 </body>
 </html>
